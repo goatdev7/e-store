@@ -1,7 +1,7 @@
 import { ApolloServer } from "apollo-server";
 import mongoose from "mongoose";
 import {typeDefs} from "./schema/typeDefs";
-import {resolvers} from "./schema/resolvers";
+import {resolvers} from "./schema/resolvers/index";
 
 const startServer = async () =>{
     try{

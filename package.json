@@ -16,6 +16,8 @@
   "description": "",
   "devDependencies": {
     "@eslint/js": "^9.16.0",
+    "@types/bcrypt": "^5.0.2",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^22.10.0",
     "@typescript-eslint/eslint-plugin": "^8.16.0",
@@ -32,8 +34,12 @@
     "typescript-eslint": "^8.16.0"
   },
   "dependencies": {
+    "@graphql-tools/merge": "^9.0.12",
     "apollo-server": "^3.13.0",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.7",
     "graphql": "^16.9.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.8.3"
   }
 }
