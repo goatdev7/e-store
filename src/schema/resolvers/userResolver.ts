@@ -1,8 +1,10 @@
 import { User } from "../../models/User";
 import bcrypt, { compare } from "bcrypt";
+import { isAuthenticated } from "../../utils/auth";
 import jwt from "jsonwebtoken";
 import dotenv from "dotenv";
 dotenv.config();
+
 
 
 const SECRET_KEY = process.env.SECRET_KEY || 'default_secret_key';;
@@ -10,6 +12,14 @@ const SECRET_KEY = process.env.SECRET_KEY || 'default_secret_key';;
 export const userResolver = {
 
     Query: {
+        me: isAuthenticated(async(_:any, __:any, context:any) =>{
+            // this check is not needed as we have applied middleware
+            // if(!context.user){
+            //     throw new Error("Not authenticated");
+            // }
+            return await User.findById(context.user.id);
+
+        }),
 
     },
 
@@ -37,8 +47,48 @@ export const userResolver = {
                 expiresIn: '1d',
             });
 
-            return {token, user};
-        }
+            return {user, token};
+        },
 
-    }
-}
+        registerUser: async(_:any, {input}: {input:any}) =>{
+            const {firstName, lastName, username, email, password, role} = input;
+            
+            const userExist = await User.findOne({
+                $or: [{email: email}, {username: username}]
+            });
+
+            // checking existing user
+            if(userExist?.email == email){
+                throw new Error("User with this email already exists");
+            }
+            if(userExist?.username == username){
+                throw new Error("User with this username already exists");
+            }
+            
+            // hash the password
+            const hashedPass = await bcrypt.hash(password, 10);
+            
+            // add the user
+            const user = new User({
+                firstName,
+                lastName,
+                username,
+                email,
+                password: hashedPass,
+                role,
+            });
+
+            await user.save();
+
+            if(!SECRET_KEY){
+                throw new Error("SECRET_KEY is not defined")
+            }
+            const token = jwt.sign({id: user._id, role:user.role}, SECRET_KEY, {
+                expiresIn: '1d',
+            });
+
+            return {user, token};
+        },
+
+    },
+};

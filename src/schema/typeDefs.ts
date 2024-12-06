@@ -4,7 +4,7 @@ import {gql} from "apollo-server";
 // mutations are for unpdating/changing data
 
 export const typeDefs = gql`
-    tyep User{
+    type User{
     id: ID!
     firstName: String,
     lastName: String,
@@ -29,6 +29,11 @@ export const typeDefs = gql`
     username: String!
     email: String!
     password: String!
+    role: String
+    }
+
+    type Query{
+    me: User
     }
 
     type Mutation{
