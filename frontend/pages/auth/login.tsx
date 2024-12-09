@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useMutation, gql } from "@apollo/client";
-import { AuthContext } from "../../context/authContext";
-import LoginForm from "../../components/loginForm";
+import { AuthContext } from "../../src/app/context/authContext";
+import LoginForm from "../../src/app/components/loginForm";
 
 // login mutation for client login form 
 const LOGIN_MUTATION = gql`

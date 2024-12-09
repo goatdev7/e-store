@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { useMutation, gql } from "@apollo/client";
-import { AuthContext } from "../../context/authContext";
+import { AuthContext } from "../../src/app/context/authContext";
 import Router from "next/router";
 import RegisterForm from "@/app/components/registerForm";
 
