@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { useMutation, gql } from "@apollo/client";
 import { AuthContext } from "../../context/authContext";
 import Router from "next/router";
+import RegisterForm from "@/app/components/registerForm";
 
 // Register mutation for client register form
 const REGISTER_MUTATION = gql`
@@ -54,15 +55,12 @@ export default function RegisterPage() {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h2>Create an Account</h2>
-            <input type="text" required value={formData.firstName} placeholder="Enter Your First Name" onChange={handleChange} name="firstName" id="firstName" />
-            <input type="text" required value={formData.lastName} placeholder="Enter Your Last Name" onChange={handleChange} name="lastName" id="lastName" />
-            <input type="text" required value={formData.username} placeholder="Create a Username" onChange={handleChange} name="username" id="username" />
-            <input type="email" required value={formData.email} placeholder="Enter your Email Address" onChange={handleChange} name="email" id="email" />
-            <input type="password" required value={formData.password} placeholder="Create a Strong Password" onChange={handleChange} name="password" id="password" />
-            <button disabled={loading} type="submit">Register</button>
-            {error && <p style={{ color: 'red' }}>Error: {error.message}</p>}
-        </form>
+        <RegisterForm
+            formData={formData}
+            handleChange={handleChange}
+            handleSubmit={handleSubmit}
+            loading={loading}
+            error={error}
+        />
     )
 };
