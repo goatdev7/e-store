@@ -1,6 +1,7 @@
 import { GetServerSideProps } from "next";
 import { createApolloClient } from "../src/app/services/client";
 import { gql } from "@apollo/client";
+import Header from "@/app/components/header";
 
 const GET_PRODUCTS = gql`
     query {

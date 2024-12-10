@@ -32,7 +32,8 @@ export default function RegisterPage() {
     });
 
     const [register, { loading, error }] = useMutation(REGISTER_MUTATION);
-
+    // console.log(formData);
+    // console.log(REGISTER_MUTATION);
     // function to handle change in the form
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
