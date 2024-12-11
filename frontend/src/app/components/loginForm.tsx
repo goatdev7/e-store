@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import React from 'react';
 
 interface LoginFormProps {
@@ -15,7 +16,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ formData, handleChange, handleSub
                 onSubmit={handleSubmit}
                 className="bg-white p-8 rounded shadow-md w-full max-w-sm"
             >
-                <h2 className="text-2xl font-bold mb-6 text-center">Log In</h2>
+                <h2 className="text-2xl font-bold mb-6 text-center text-black">Log In</h2>
 
                 <div className="mb-4">
                     <label htmlFor="identifier" className="block text-gray-700 font-medium mb-2">Username/Email</label>
@@ -26,7 +27,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ formData, handleChange, handleSub
                         name="identifier"
                         id="identifier"
                         value={formData.identifier}
-                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-3 py-2 border rounded border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         required
                     />
                 </div>
@@ -40,7 +41,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ formData, handleChange, handleSub
                         id="password"
                         value={formData.password}
                         onChange={handleChange}
-                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-3 py-2 border rounded border-gray-300 text-black focus:outline-none focus:ring-2 focus:ring-indigo-500"
                         required
                     />
                 </div>
@@ -53,7 +54,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ formData, handleChange, handleSub
                     {loading ? 'Logging in...' : 'Log In'}
                 </button>
 
+
                 {error && <p className="text-red-600 text-center mt-4">Error Logging in</p>}
+
+            <p className='text-black py-2 w-full content-center'>Not a member? <Link href="/auth/register" className='text-gray-700 hover:text-indigo-600 hover:underline'>Register Now</Link></p>
             </form>
         </div>
     );

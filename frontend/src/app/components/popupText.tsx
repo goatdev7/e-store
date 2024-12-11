@@ -16,8 +16,8 @@ const PopupText: React.FC<PopupTextProps> = ({ message, visible, onClose }) => {
 
             {/* Popup container */}
             <div className="relative bg-white w-full max-w-md mx-4 p-6 rounded shadow-lg">
-                <h2 className="text-xl font-semibold mb-4">Notification</h2>
-                <p className="mb-4">{message}</p>
+                <h2 className="text-xl font-semibold text-black mb-4">Notification</h2>
+                <p className="mb-4 text-black">{message}</p>
                 <div className="flex justify-end">
                     <button
                         className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"

@@ -59,7 +59,7 @@ export default function RegisterPage() {
             setTimeout(() => {
                 setPopUpVisible(false)
                 router.push('/');
-            }, 2000);
+            }, 4000);
         }
     };
 

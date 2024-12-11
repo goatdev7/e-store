@@ -7,7 +7,7 @@ const Header: React.FC = () => {
 
   return (
     <header className="w-full bg-white shadow p-4 flex items-center justify-between">
-      <div className="text-xl font-bold">
+      <div className="text-xl font-bold text-black">
         <Link href="/">E-Store</Link>
       </div>
       <nav className="flex items-center space-x-4">
