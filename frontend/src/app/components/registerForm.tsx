@@ -17,12 +17,12 @@ interface RegisterFormProps {
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ formData, handleChange, handleSubmit, loading, error }) => {
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
+        <div className="flex justify-center items-center min-h-screen bg-gray-200">
             <form 
                 onSubmit={handleSubmit}
                 className="bg-white p-8 rounded shadow-md w-full max-w-sm"
             >
-                <h2 className="text-2xl font-bold mb-6 text-center">Create an Account</h2>
+                <h2 className="text-2xl text-gray-500 font-bold mb-6 text-center">Create an Account</h2>
 
                 <div className="mb-4">
                     <label htmlFor="firstName" className="block text-gray-700 font-medium mb-2">
@@ -36,7 +36,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ formData, handleChange, han
                         onChange={handleChange}
                         name="firstName"
                         id="firstName"
-                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 text-black focus:ring-indigo-500"
                     />
                 </div>
 
@@ -52,7 +52,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ formData, handleChange, han
                         onChange={handleChange}
                         name="lastName"
                         id="lastName"
-                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none text-black focus:ring-2 focus:ring-indigo-500"
                     />
                 </div>
 
@@ -68,7 +68,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ formData, handleChange, han
                         onChange={handleChange}
                         name="username"
                         id="username"
-                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none text-black focus:ring-2 focus:ring-indigo-500"
                     />
                 </div>
 
@@ -84,7 +84,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ formData, handleChange, han
                         onChange={handleChange}
                         name="email"
                         id="email"
-                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none text-black focus:ring-2 focus:ring-indigo-500"
                     />
                 </div>
 
@@ -100,7 +100,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ formData, handleChange, han
                         onChange={handleChange}
                         name="password"
                         id="password"
-                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none text-black focus:ring-2 focus:ring-indigo-500"
                     />
                 </div>
 

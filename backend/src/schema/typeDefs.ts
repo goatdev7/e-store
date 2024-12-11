@@ -1,4 +1,4 @@
-import {gql} from "apollo-server";
+import { gql } from "apollo-server";
 
 // queries for reading/fetching data
 // mutations are for unpdating/changing data
@@ -18,6 +18,14 @@ export const typeDefs = gql`
     token: String!
     }
 
+    type Product {
+    id: ID!
+    name: String!
+    description: String
+    price: Float!
+    quantity: Int!
+    }
+
     input loginInput{
     identifier: String!
     password: String!
@@ -32,38 +40,26 @@ export const typeDefs = gql`
     role: String
     }
 
-    type Query{
-    me: User
-    }
 
-    type Mutation{
-    loginUser(input: loginInput!): AuthPayload!
-    registerUser(input: registerInput!): AuthPayload!
-    }
-
-    type Product {
-    id: ID!
-    name: String!
-    description: String
-    price: Float!
-    quantity: Int!
-    }
-
-    type Query{
-    getProducts: [Product]
-    getProduct(id: ID!): Product
-    }
 
     input ProductInput{
-    name: String!
-    description: String
-    price: Float!
-    quantity:Int!
-    }
+        name: String!
+        description: String
+        price: Float!
+        quantity:Int!
+        }
+        
+    type Query{
+        me: User
+        getProducts: [Product]
+        getProduct(id: ID!): Product
+        }
 
     type Mutation{
     addProduct(product: ProductInput):Product
     updateProduct(id: ID!, product:ProductInput): Product
     deleteProduct(id: ID!): String
+    loginUser(input: loginInput!): AuthPayload!
+    registerUser(input: registerInput!): AuthPayload!
     }
 `;
