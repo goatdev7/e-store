@@ -40,23 +40,21 @@ export const typeDefs = gql`
     role: String
     }
 
-
-
     input ProductInput{
         name: String!
         description: String
         price: Float!
         quantity:Int!
-        }
+    }
         
     type Query{
         me: User
         getProducts: [Product]
         getProduct(id: ID!): Product
-        }
+    }
 
     type Mutation{
-    addProduct(product: ProductInput):Product
+    addProduct(product: ProductInput!):Product
     updateProduct(id: ID!, product:ProductInput): Product
     deleteProduct(id: ID!): String
     loginUser(input: loginInput!): AuthPayload!
