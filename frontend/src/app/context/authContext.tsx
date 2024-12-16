@@ -44,7 +44,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const logout = () => {
-    setToken(null);
+    setTimeout(() => {
+      setToken(null);
+  }, 2000);
   };
 
   const isLoggedIn = !!token;

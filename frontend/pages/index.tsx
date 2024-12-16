@@ -71,9 +71,9 @@ export default function Home({ products }: HomeProps) {
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                         {products.map((product) => (
                             <div key={product.id} className="bg-white rounded shadow p-4">
-                                <h3 className="text-xl font-semibold mb-2">{product.name}</h3>
-                                <p className="text-gray-600 mb-2">{product.description}</p>
-                                <p className="font-bold text-indigo-700">${product.price.toFixed(2)}</p>
+                                <h3 className="text-xl text-black font-semibold mb-2">{product.name}</h3>
+                                <p className="text-black mb-2">{product.description}</p>
+                                <p className="font-bold text-black text-indigo-700">${product.price.toFixed(2)}</p>
                             </div>
                         ))}
                     </div>

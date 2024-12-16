@@ -14,6 +14,7 @@ const LOGIN_MUTATION = gql`
                 id
                 username
                 email
+                role
             }
         }
     }
@@ -37,11 +38,13 @@ export default function LoginPage() {
         e.preventDefault();
         const { data } = await login({ variables: { input: formData } });
         if (data?.loginUser?.token) {
-            setToken(data.loginUser.token);
+            const token = data.loginUser.token;
+            // await fetch(`/api/set-token?token=${token}`);
             setSpinnerVisible(true);
-
+            
             setTimeout(() => {
                 setSpinnerVisible(true);
+                setToken(token);
                 router.push("/");
             }, 2000);
             //redirect to home page 

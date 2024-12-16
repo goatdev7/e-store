@@ -11,9 +11,10 @@ export const hasRole = (role: string, next: any) =>(
     args:any,
     context: any,
     info:any
-) =>{
+) => {
+    console.log(context);
     if (!context.user){
-        throw new Error("Not authenticated");
+        throw new Error("Not authenticated ji");
     }
     if (context.user.role !== role){
         throw new Error("Not authenticated");

@@ -26,6 +26,7 @@ const startServer = async () => {
                     try {
                         // verify the token by decrypting
                         const decodedToken = jwt.verify(token, SECRET_KEY) as any;
+                        console.log("decoded token is:",decodedToken.role);
                         return { user: decodedToken };
                     } catch (error) {
                         console.error("Invalid Token");
