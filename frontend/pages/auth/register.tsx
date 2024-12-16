@@ -59,7 +59,7 @@ export default function RegisterPage() {
             // verification email
             setTimeout(() => {
                 setPopUpVisible(false)
-                // router.push('/');
+                router.push('/');
             }, 4000);
         }
     };

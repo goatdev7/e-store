@@ -40,8 +40,9 @@ export default function LoginPage() {
         if (data?.loginUser?.token) {
             const token = data.loginUser.token;
             const role = data.loginUser.user.role;
-            console.log("Fetched role is:", role);
+
             // await fetch(`/api/set-token?token=${token}`);
+            
             setSpinnerVisible(true);
             setTimeout(() => {
                 setSpinnerVisible(true);
