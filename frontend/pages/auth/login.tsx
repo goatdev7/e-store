@@ -23,7 +23,7 @@ const LOGIN_MUTATION = gql`
 // login page function
 export default function LoginPage() {
     const [visible, setSpinnerVisible] = useState(false);
-    const { setToken } = useContext(AuthContext);
+    const { setToken, setRole } = useContext(AuthContext);
     const [formData, setFormData] = useState({ identifier: '', password: '' });
     const [login, { loading, error }] = useMutation(LOGIN_MUTATION);
 
@@ -39,12 +39,14 @@ export default function LoginPage() {
         const { data } = await login({ variables: { input: formData } });
         if (data?.loginUser?.token) {
             const token = data.loginUser.token;
+            const role = data.loginUser.user.role;
+            console.log("Fetched role is:", role);
             // await fetch(`/api/set-token?token=${token}`);
             setSpinnerVisible(true);
-            
             setTimeout(() => {
                 setSpinnerVisible(true);
                 setToken(token);
+                setRole(role);
                 router.push("/");
             }, 2000);
             //redirect to home page 
