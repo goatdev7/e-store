@@ -14,7 +14,7 @@ interface AdminProductsPageProps {
 }
 
 export default function AdminProductsPage({ isAdmin }: AdminProductsPageProps) {
-    const { token } = useContext(AuthContext);
+    const { token, role } = useContext(AuthContext);
     const [formData, setFormData] = useState({
         name: "",
         description: "",
@@ -36,7 +36,7 @@ export default function AdminProductsPage({ isAdmin }: AdminProductsPageProps) {
 
 
 
-    if (!isAdmin) {
+    if (role !== "admin") {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
                 <p className="text-gray-700">Access Denied.</p>
@@ -121,29 +121,3 @@ export default function AdminProductsPage({ isAdmin }: AdminProductsPageProps) {
         </div>
     );
 }
-
-// Check if user is admin in SSR
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const { req } = context;
-    const token = req.headers.cookie?.replace("token=", "");
-
-    let isAdmin = false;
-
-    if (token) {
-        // Decode token and check role
-        try {
-            const decoded: any = jwt.decode(token);
-            if (decoded && decoded.role === "admin") {
-                isAdmin = true;
-            }
-        } catch (err) {
-            console.error("JWT decode error:", err);
-        }
-    }
-
-    return {
-        props: {
-            isAdmin
-        }
-    };
-};

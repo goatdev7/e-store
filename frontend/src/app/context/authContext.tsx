@@ -66,6 +66,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const logout = () => {
     setTimeout(() => {
       setToken(null);
+      setRole(null);
     }, 2000);
   };
 

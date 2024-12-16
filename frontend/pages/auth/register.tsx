@@ -14,6 +14,7 @@ const REGISTER_MUTATION = gql`
                 id
                 username
                 email
+                role
             }
         }
     }
@@ -30,7 +31,7 @@ export default function RegisterPage() {
         username: '',
         email: '',
         password: '',
-        role: '',
+        role: 'user',
     });
     const [PopUpVisible, setPopUpVisible] = useState(false);
 
@@ -48,7 +49,7 @@ export default function RegisterPage() {
         e.preventDefault();
 
         const { data } = await register({ variables: { input: formData } });
-        console.log(data);
+        console.log(formData);
 
         if (data?.registerUser?.token) {
             setToken(data.registerUser.token);
@@ -58,7 +59,7 @@ export default function RegisterPage() {
             // verification email
             setTimeout(() => {
                 setPopUpVisible(false)
-                router.push('/');
+                // router.push('/');
             }, 4000);
         }
     };
