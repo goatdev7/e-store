@@ -22,18 +22,7 @@ export default function AdminProductsPage({ isAdmin }: AdminProductsPageProps) {
         quantity: 1,
     });
 
-    const [addProduct, { loading, error }] = useMutation(ADD_PRODUCT, {
-        update(cache, { data: { addProduct } }) {
-            const existingData: any = cache.readQuery({ query: GET_PRODUCTS });
-            cache.writeQuery({
-                query: GET_PRODUCTS,
-                data: {
-                    getProducts: [...(existingData.getProducts || []), addProduct],
-                },
-            });
-        },
-    });
-
+    const [addProduct, { loading, error }] = useMutation(ADD_PRODUCT);
 
 
     if (role !== "admin") {
@@ -53,12 +42,23 @@ export default function AdminProductsPage({ isAdmin }: AdminProductsPageProps) {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        await addProduct({ variables: { product: formData } });
-        Router.push("/products");
+        try {
+            await addProduct({
+                variables: { product: formData },
+                context: {
+                    headers: {
+                        authorization: `Bearer ${token}` // Add your auth token
+                    }
+                }
+            });
+            Router.push("/products");
+        } catch (err) {
+            console.error("Error adding product:", err);
+        }
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 py-10">
+        <div className="min-h-screen text-black bg-gray-50 py-10">
             <div className="container mx-auto px-4">
                 <h1 className="text-3xl font-bold mb-6">Admin - Manage Products</h1>
                 <form onSubmit={handleSubmit} className="bg-white p-6 rounded shadow-md max-w-sm">
