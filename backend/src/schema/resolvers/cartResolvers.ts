@@ -1,4 +1,15 @@
 import { Cart } from "../../models/Cart";
+import { Types } from "mongoose";
+
+interface CartItem {
+    quantity: number;
+    product: Types.ObjectId;
+}
+interface ICart extends Document {
+    user: Types.ObjectId;
+    items: CartItem[];
+    save(): Promise<ICart>;
+}
 
 export const cartResolvers = {
     Query: {
@@ -13,17 +24,20 @@ export const cartResolvers = {
     },
 
     Mutation: {
-        addToCart: async (_: any, { productId, quantity }: { productId: string, quantity: number }, context: any) => {
+        addToCart: async (_: any, { productId, quantity }: { productId: Types.ObjectId, quantity: number }, context: { user?: { id: string } }): Promise<ICart | null> => {
             if (!context.user) {
                 throw new Error("Not authenticated");
             }
-            let cart = await Cart.findOne({ user: context.user.id });
+            let cart = await Cart.findOne({ user: context.user.id }) as ICart;
             if (!cart) {
-                cart = new Cart({ user: context.user.id, items: [] });
+                let cart = new Cart({
+                    user: context.user.id,
+                    items: [],
+                });
+                await cart.save();
             }
-            cart = cart || { items: [] };
             const productIndex = cart.items.findIndex((item: any) => item.product.equals(productId));
-            if (productIndex !== undefined && productIndex !== -1) {
+            if (productIndex !== -1) {
                 cart.items[productIndex].quantity += quantity;
             } else {
                 cart.items.push({ product: productId, quantity });
