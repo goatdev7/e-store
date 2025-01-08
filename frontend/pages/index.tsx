@@ -58,7 +58,7 @@ export default function Home({ products }: HomeProps) {
                         )}
                         <Link
                             href="#products"
-                            className="bg-white text-black px-4 py-4 rounded-full font-semibold hover:bg-indigo-800 inline-block mt-4"
+                            className="bg-white text-black px-4 py-3 rounded-full font-semibold hover:bg-gray-300 inline-block mt-4"
                         >
                             Shop Now
                         </Link>
@@ -79,7 +79,7 @@ export default function Home({ products }: HomeProps) {
                             <p className="text-gray-700 text-center">No products available right now.</p>
                         ) : (
                             <div className="grid text-black grid-cols-1 md:grid-cols-3 gap-6">
-                                {products.slice(0,3).map((product) => (
+                                {products.slice(0, 3).map((product) => (
                                     <motion.div
                                         key={product.id}
                                         initial={{ opacity: 0, y: 20 }}
@@ -111,7 +111,7 @@ export default function Home({ products }: HomeProps) {
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold mb-12 text-center text-white">What Our Customers Say</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <motion.div 
+                            <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.1 }}
@@ -122,7 +122,7 @@ export default function Home({ products }: HomeProps) {
                                 </p>
                                 <h3 className="mt-6 text-gray-800 font-bold">- John D.</h3>
                             </motion.div>
-                            <motion.div 
+                            <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.2 }}
@@ -133,7 +133,7 @@ export default function Home({ products }: HomeProps) {
                                 </p>
                                 <h3 className="mt-6 text-gray-800 font-bold">- Sarah K.</h3>
                             </motion.div>
-                            <motion.div 
+                            <motion.div
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.5, delay: 0.3 }}
@@ -148,7 +148,7 @@ export default function Home({ products }: HomeProps) {
                     </div>
                 </motion.section>
             </div>
-         </div>
+        </div>
     );
 }
 

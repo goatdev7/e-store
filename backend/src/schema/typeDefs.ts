@@ -26,6 +26,17 @@ export const typeDefs = gql`
     quantity: Int!
     }
 
+    type CartItem{
+    product: Product!
+    quantity: Int!
+    }
+
+    type Cart{
+    id: ID!
+    user: User!
+    items: [CartItem]
+    }
+
     input loginInput{
     identifier: String!
     password: String!
@@ -51,6 +62,7 @@ export const typeDefs = gql`
         me: User
         getProducts: [Product]
         getProduct(id: ID!): Product
+        getCart: Cart
     }
 
     type Mutation{
@@ -59,5 +71,8 @@ export const typeDefs = gql`
     deleteProduct(id: ID!): String
     loginUser(input: loginInput!): AuthPayload!
     registerUser(input: registerInput!): AuthPayload!
+    updateCartItem(productId: ID!, quantity: Int!): Cart
+    addToCart(productId: ID!, quantity: Int!): Cart
+    removeFromCart(productId: ID!): Cart
     }
 `;
