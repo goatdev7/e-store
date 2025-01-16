@@ -23,9 +23,11 @@ const errorLinks = onError(({ graphQLErrors, networkError }) => {
 // factory fucntion  for dynanmic tokens
 export function createApolloClient(token?: string) {
     const authLink = new ApolloLink((operation, forward) => {
+        console.log("Token", token);
         operation.setContext({
             headers: {
-                authorization: token || ''
+                authorization: `Bearer ${token}`
+                // token || null
             }
         });
         return forward(operation);

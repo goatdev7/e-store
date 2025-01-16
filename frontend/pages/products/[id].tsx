@@ -40,7 +40,7 @@ export default function ProductDetailPage({ product }: ProductDetailPageProps) {
             setPopupVisible(true);
         }
         else{
-            addToCart(product.description, 1);
+            addToCart(product.id, 1);
             setPopupMsg("Product added to cart");
             setPopupVisible(true);
         }

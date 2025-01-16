@@ -26,7 +26,7 @@ export const cartResolvers = {
     Mutation: {
         addToCart: async (_: any, { productId, quantity }: { productId: Types.ObjectId, quantity: number }, context: { user?: { id: string } }): Promise<ICart | null> => {
             if (!context.user) {
-                throw new Error("Not authenticated");
+                throw new Error("Not authenticated test");
             }
             let cart = await Cart.findOne({ user: context.user.id }) as ICart;
             if (!cart) {
