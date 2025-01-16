@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { AuthContext } from '../context/authContext';
 
 const Header: React.FC = () => {
@@ -7,8 +8,11 @@ const Header: React.FC = () => {
 
   return (
     <header className="w-full bg-white shadow p-4 flex items-center justify-between">
-      <div className="text-xl font-bold text-black">
+      <div className="flex items-center space-x-4 text-xl font-bold text-black">
         <Link href="/">E-Store</Link>
+        <Link href="/cart" className="text-gray-700 hover:text-indigo-600">
+          <Image src="/cart.svg" height="20" width="20" alt="cartLogo" />
+          </Link>
       </div>
       <nav className="flex items-center space-x-4">
         <Link href="/" className="text-gray-700 hover:text-indigo-600">
@@ -17,7 +21,6 @@ const Header: React.FC = () => {
         <Link href="/products/" className="text-gray-700 hover:text-indigo-600">
           Products
         </Link>
-
         {isLoggedIn ? (
           <button
             onClick={logout}
@@ -35,6 +38,7 @@ const Header: React.FC = () => {
             </Link>
           </>
         )}
+
       </nav>
     </header>
   );

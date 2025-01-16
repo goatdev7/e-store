@@ -6,6 +6,7 @@ import { GET_CART, ADD_TO_CART, UPDATE_CART_ITEM, REMOVE_FROM_CART } from "../se
 
 interface CartItem {
     product: {
+        id: string,
         name: string,
         description: string,
         price: number,
