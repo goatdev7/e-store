@@ -18,7 +18,8 @@ export const GET_CART = gql`
                 }
             quantity
             }
-        }`;
+        }
+}`;
 
 export const ADD_TO_CART = gql`
     mutation AddToCart($productId: ID!, $quantity: Int!) {

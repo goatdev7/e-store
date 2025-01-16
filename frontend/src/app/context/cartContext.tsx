@@ -33,7 +33,7 @@ export const CartContext = createContext<CartContextProps>({
     removeFromCart: async () => { },
 });
 
-export const CartProvider: React.FC = ({ children }) => {
+export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [cart, setCart] = useState<CartType | null>(null);
     // getting the data
     const { data, loading, error } = useQuery(GET_CART, {
@@ -95,4 +95,5 @@ export const CartProvider: React.FC = ({ children }) => {
     )
 };
 
+// for usage across the app
 export const useCart = ()=> useContext(CartContext);
