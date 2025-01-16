@@ -46,5 +46,42 @@ export const cartResolvers = {
             await cart.save();
             return cart;
         },
+        updateCartItem: async (_: any, { productId, quantity }: { productId: Types.ObjectId, quantity: number }, context: { user?: { id: string } }): Promise<ICart | null> => {
+            if (!context.user) {
+                throw new Error("Not authenticated");
+            }
+            let cart = await Cart.findOne({ user: context.user.id }) as ICart;
+            if (!cart) {
+                throw new Error("Cart not found");
+            }
+            const productIndex = cart.items.findIndex((item: any) => item.product.equals(productId));
+            if (productIndex !== -1) {
+                cart.items[productIndex].quantity = quantity;
+            } else {
+                throw new Error("Product not found in cart");
+            }
+
+            await cart.save();
+            return cart;
+        },
+
+        removeFromCart: async (_: any, { productId }: { productId: Types.ObjectId }, context: { user?: { id: string } }): Promise<ICart | null> => {
+            if (!context.user) {
+                throw new Error("Not authenticated");
+            }
+            let cart = await Cart.findOne({ user: context.user.id }) as ICart;
+            if (!cart) {
+                throw new Error("Cart not found");
+            }
+            const productIndex = cart.items.findIndex((item: any) => item.product.equals(productId));
+            if (productIndex !== -1) {
+                cart.items = cart.items.filter((item: any) => !item.product.equals(productId));
+            } else {
+                throw new Error("Product not found in cart");
+            }
+
+            await cart.save();
+            return cart;
     }
+}
 };

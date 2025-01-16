@@ -2,6 +2,10 @@ import { GetServerSideProps } from "next";
 import Link from "next/link";
 import { GET_PRODUCT } from "@/app/services/product";
 import { createApolloClient } from "@/app/services/client";
+import { useCart } from "@/app/context/cartContext";
+import { useContext, useState } from "react";
+import { AuthContext } from "@/app/context/authContext";
+import PopupText from "@/app/components/popupText";
 
 interface Product {
     id: string;
@@ -17,12 +21,29 @@ interface ProductDetailPageProps {
 
 
 export default function ProductDetailPage({ product }: ProductDetailPageProps) {
+    const [ PopupVisible, setPopupVisible ] = useState(false);
+    const [popUpMessage, setPopupMsg ] = useState("Please login to add to cart");
+    const { addToCart } = useCart();
+    const { role, token } = useContext(AuthContext);
+
     if (!product) {
         return (
             <div className="min-h-screen flex items-center justify-center bg-gray-50">
                 <p className="text-gray-600">Product not found.</p>
             </div>
         );
+    }
+
+    const handleAddToCart = async () => {
+        // Add to cart logic
+        if (!token) {
+            setPopupVisible(true);
+        }
+        else{
+            addToCart(product.description, 1);
+            setPopupMsg("Product added to cart");
+            setPopupVisible(true);
+        }
     }
 
     return (
@@ -38,11 +59,17 @@ export default function ProductDetailPage({ product }: ProductDetailPageProps) {
                     <p className="text-xl font-semibold text-indigo-700">
                         ${product.price.toFixed(2)}
                     </p>
-                    <button className="mt-6 bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700">
+                    <button onClick={handleAddToCart} className="mt-6 bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700">
                         Add to Cart
                     </button>
                 </div>
             </div>
+            <PopupText
+            message={popUpMessage}
+            visible={PopupVisible}
+            onClose={() => setPopupVisible(false)}
+            >
+            </PopupText>
         </div>
     );
 
