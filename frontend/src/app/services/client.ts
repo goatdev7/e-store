@@ -21,21 +21,22 @@ const errorLinks = onError(({ graphQLErrors, networkError }) => {
 });
 
 // factory fucntion  for dynanmic tokens
-export function createApolloClient(token?: string) {
+export function createApolloClient() {
     const authLink = new ApolloLink((operation, forward) => {
-        console.log("Token", token);
-        operation.setContext({
-            headers: {
-                authorization: `Bearer ${token}`
-                // token || null
-            }
-        });
+        let token;
+
+        // Check if the environment is the browser
+        if (typeof window !== 'undefined') {
+            token = localStorage.getItem('token');
+        }
+        const headers = token ? { authorization: `Bearer ${token}` } : {};
+        operation.setContext({ headers });
         return forward(operation);
     });
-
     return new ApolloClient({
         link: from([errorLinks, authLink, httplink]),
         cache: new InMemoryCache()
-    });
+    }
+    );
 
 }

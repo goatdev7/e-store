@@ -40,14 +40,13 @@ export default function LoginPage() {
         if (data?.loginUser?.token) {
             const token = data.loginUser.token;
             const role = data.loginUser.user.role;
-
-            // await fetch(`/api/set-token?token=${token}`);
+            
+            setToken(token);
+            setRole(role);
             
             setSpinnerVisible(true);
             setTimeout(() => {
                 setSpinnerVisible(true);
-                setToken(token);
-                setRole(role);
                 router.push("/");
             }, 2000);
             //redirect to home page 

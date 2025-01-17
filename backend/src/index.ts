@@ -1,4 +1,4 @@
-import { ApolloServer } from "apollo-server";
+import { ApolloServer, AuthenticationError } from "apollo-server";
 import mongoose from "mongoose";
 import { typeDefs } from "./schema/typeDefs";
 import { resolvers } from "./schema/resolvers/index";
@@ -20,7 +20,7 @@ const startServer = async () => {
             typeDefs,
             resolvers,
             context: ({ req }) => {
-                const token = req.headers.authorization || '';
+                const token = req.headers.authorization?.split(' ')[1] || '';
 
                 if (token) {
                     try {
@@ -29,10 +29,11 @@ const startServer = async () => {
                         return { user: decodedToken };
                     } catch (error) {
                         console.error("Invalid Token");
+                        throw new AuthenticationError("Authentication token is invalid or expired!");
                     }
 
                 }
-                // if no token then it means we will continue as it is
+                // throw new AuthenticationError("Authentication token is invalid or expired");
                 return {};
 
             },
