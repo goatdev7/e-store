@@ -27,5 +27,7 @@ jobs:
           cd backend
           npm install 
       
-      - name: Build the app
-        run: npm run build
+      - name: Build the frontend app
+        run: |
+          cd frontend
+          npm run build
