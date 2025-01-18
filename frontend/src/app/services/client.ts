@@ -33,6 +33,7 @@ export function createApolloClient() {
         operation.setContext({ headers });
         return forward(operation);
     });
+    
     return new ApolloClient({
         link: from([errorLinks, authLink, httplink]),
         cache: new InMemoryCache()

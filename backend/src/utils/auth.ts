@@ -1,6 +1,6 @@
 export const isAuthenticated = (next: any) => (root: any, args: any, context: any, info: any) => {
     if (!context.user) {
-        throw new Error("Not authenticated");
+        throw new Error("Not authenticated test for id");
     }
 
     return next(root, args, context, info);

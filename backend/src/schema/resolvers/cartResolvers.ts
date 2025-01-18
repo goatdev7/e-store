@@ -1,87 +1,160 @@
+// updated the cart resolvers to match the new schema
 import { Cart } from "../../models/Cart";
 import { Types } from "mongoose";
 
-interface CartItem {
-    quantity: number;
-    product: Types.ObjectId;
-}
-interface ICart extends Document {
-    user: Types.ObjectId;
-    items: CartItem[];
-    save(): Promise<ICart>;
-}
-
 export const cartResolvers = {
     Query: {
-        getCart: async (_: any, __: any, context: any) => {
-            if (!context.user) {
+        getCart: async (_: any, __: any, { user }: { user?: { id: string } }) => {
+            if (!user) {
                 throw new Error("Not authenticated");
             }
 
-            const cart = await Cart.findOne({ user: context.user.id }).populate('items.product');
-            return cart;
+            try {
+                const cart = await Cart.findOne({ user: user.id })
+                    .populate({
+                        path: 'items.product',
+                        model: 'Product',
+                        select: 'name description price quantity'
+                    })
+                    .populate('user', 'firstName lastName username email role');
+
+                if (!cart) {
+                    // Return empty cart structure if no cart exists
+                    return {
+                        id: null,
+                        user: user,
+                        items: []
+                    };
+                }
+
+                return {
+                    id: cart._id,
+                    user: cart.user,
+                    items: cart.items
+                };
+            } catch (error) {
+                throw new Error("Failed to fetch cart");
+            }
         }
     },
 
     Mutation: {
-        addToCart: async (_: any, { productId, quantity }: { productId: Types.ObjectId, quantity: number }, context: { user?: { id: string } }): Promise<ICart | null> => {
-            if (!context.user) {
+        addToCart: async (_: any, 
+            { productId, quantity }: { productId: string; quantity: number }, 
+            { user }: { user?: { id: string } }
+        ) => {
+            if (!user) {
                 throw new Error("Not authenticated");
             }
-            let cart = await Cart.findOne({ user: context.user.id }) as ICart;
-            if (!cart) {
-                let cart = new Cart({
-                    user: context.user.id,
-                    items: [],
-                });
+
+            try {
+                let cart = await Cart.findOne({ user: user.id });
+
+                if (!cart) {
+                    cart = await Cart.create({
+                        user: user.id,
+                        items: [{
+                            product: new Types.ObjectId(productId),
+                            quantity
+                        }]
+                    });
+                } else {
+                    const existingItemIndex = cart.items.findIndex(
+                        item => item.product.toString() === productId
+                    );
+
+                    if (existingItemIndex > -1) {
+                        cart.items[existingItemIndex].quantity += quantity;
+                    } else {
+                        cart.items.push({
+                            product: new Types.ObjectId(productId),
+                            quantity
+                        });
+                    }
+                    await cart.save();
+                }
+
+                // Return fully populated cart
+                return await Cart.findById(cart._id)
+                    .populate({
+                        path: 'items.product',
+                        model: 'Product',
+                        select: 'name description price quantity'
+                    })
+                    .populate('user', 'firstName lastName username email role');
+            } catch (error) {
+                throw new Error("Failed to add item to cart");
+            }
+        },
+
+        updateCartItem: async (_: any, 
+            { productId, quantity }: { productId: string; quantity: number },
+            { user }: { user?: { id: string } }
+        ) => {
+            if (!user) {
+                throw new Error("Not authenticated");
+            }
+
+            try {
+                const cart = await Cart.findOne({ user: user.id });
+                if (!cart) {
+                    throw new Error("Cart not found");
+                }
+
+                const itemIndex = cart.items.findIndex(
+                    item => item.product.toString() === productId
+                );
+
+                if (itemIndex === -1) {
+                    throw new Error("Item not found in cart");
+                }
+
+                cart.items[itemIndex].quantity = quantity;
                 await cart.save();
-            }
-            const productIndex = cart.items.findIndex((item: any) => item.product.equals(productId));
-            if (productIndex !== -1) {
-                cart.items[productIndex].quantity += quantity;
-            } else {
-                cart.items.push({ product: productId, quantity });
-            }
 
-            await cart.save();
-            return cart;
-        },
-        updateCartItem: async (_: any, { productId, quantity }: { productId: Types.ObjectId, quantity: number }, context: { user?: { id: string } }): Promise<ICart | null> => {
-            if (!context.user) {
-                throw new Error("Not authenticated");
+                // Return fully populated cart
+                return await Cart.findById(cart._id)
+                    .populate({
+                        path: 'items.product',
+                        model: 'Product',
+                        select: 'name description price quantity'
+                    })
+                    .populate('user', 'firstName lastName username email role');
+            } catch (error) {
+                throw new Error("Failed to update cart item");
             }
-            let cart = await Cart.findOne({ user: context.user.id }) as ICart;
-            if (!cart) {
-                throw new Error("Cart not found");
-            }
-            const productIndex = cart.items.findIndex((item: any) => item.product.equals(productId));
-            if (productIndex !== -1) {
-                cart.items[productIndex].quantity = quantity;
-            } else {
-                throw new Error("Product not found in cart");
-            }
-
-            await cart.save();
-            return cart;
         },
 
-        removeFromCart: async (_: any, { productId }: { productId: Types.ObjectId }, context: { user?: { id: string } }): Promise<ICart | null> => {
-            if (!context.user) {
+        removeFromCart: async (_: any, 
+            { productId }: { productId: string },
+            { user }: { user?: { id: string } }
+        ) => {
+            if (!user) {
                 throw new Error("Not authenticated");
             }
-            let cart = await Cart.findOne({ user: context.user.id }) as ICart;
-            if (!cart) {
-                throw new Error("Cart not found");
-            }
-            const productIndex = cart.items.findIndex((item: any) => item.product.equals(productId));
-            if (productIndex !== -1) {
-                cart.items = cart.items.filter((item: any) => !item.product.equals(productId));
-            } else {
-                throw new Error("Product not found in cart");
-            }
 
-            await cart.save();
-            return cart;
+            try {
+                const cart = await Cart.findOne({ user: user.id });
+                if (!cart) {
+                    throw new Error("Cart not found");
+                }
+
+                cart.items = cart.items.filter(
+                    item => item.product.toString() !== productId
+                );
+                await cart.save();
+
+                // Return fully populated cart
+                return await Cart.findById(cart._id)
+                    .populate({
+                        path: 'items.product',
+                        model: 'Product',
+                        select: 'name description price quantity'
+                    })
+                    .populate('user', 'firstName lastName username email role');
+            } catch (error) {
+                throw new Error("Failed to remove item from cart");
+            }
+        }
     }
-}
 };

@@ -54,8 +54,8 @@ export default function ProductDetailPage({ product }: ProductDetailPageProps) {
 
                 </Link>
                 <div className="bg-white rounded shadow p-6">
-                    <h1 className="text-3xl font-bold mb-4">{product.name}</h1>
-                    <p className="text-gray-700 mb-4">{product.description}</p>
+                    <h1 className="text-3xl text-gray-500 font-bold mb-4">{product.name}</h1>
+                    <p className="text-gray-500 mb-4">{product.description}</p>
                     <p className="text-xl font-semibold text-indigo-700">
                         ${product.price.toFixed(2)}
                     </p>
@@ -83,7 +83,6 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
         query: GET_PRODUCT,
         variables: { id },
     });
-
     return {
         props: {
             product: data.getProduct
