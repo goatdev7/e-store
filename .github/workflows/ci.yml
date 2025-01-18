@@ -17,9 +17,15 @@ jobs:
         with:
           node-version: '16.x'
       
-      - name: Install dependcies
-        run: npm install 
+      - name: Install dependcies in front end
+        run: |
+          cd frontend
+          npm install 
+      
+      - name: Install dependcies in backend end
+        run: |
+          cd backend
+          npm install 
       
       - name: Build the app
         run: npm run build
-        
