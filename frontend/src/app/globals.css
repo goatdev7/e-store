@@ -1,4 +1,4 @@
-@tailwind base;
+ @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -11,4 +11,15 @@ html {
 
 body {
     @apply m-0 p-0;
+}  
+
+
+/* Remove dark mode styles and force light mode */
+/* html {
+  @apply bg-white text-gray-500;
+  font-family: Arial, Helvetica, sans-serif;
 }
+
+body {
+  @apply m-0 p-0;
+} */

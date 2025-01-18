@@ -36,7 +36,7 @@ export default function Home({ products }: HomeProps) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
-                    className="min-h-screen flex items-center justify-center text-center px-4 py-20 bg-gradient-to-r from-blue-500 to-blue-700 text-white"
+                    className="min-h-screen flex items-center justify-center text-center px-4 py-20 bg-gradient-to-r from-blue-500 to-blue-700 "
                 >
                     <div className="container mx-auto">
                         <h1 className="text-5xl font-extrabold mb-4">Welcome to E-Store</h1>
@@ -48,7 +48,7 @@ export default function Home({ products }: HomeProps) {
                                 <h2 className="text-2xl font-bold">
                                     Top Deal: {featuredProduct.name}
                                 </h2>
-                                <p className="text-md italic text-white/90">
+                                <p className="text-md italic /90">
                                     {featuredProduct.description}
                                 </p>
                                 <p className="text-xl font-semibold mt-2">
@@ -58,7 +58,7 @@ export default function Home({ products }: HomeProps) {
                         )}
                         <Link
                             href="#products"
-                            className="bg-white text-black px-4 py-3 rounded-full font-semibold hover:bg-gray-300 inline-block mt-4"
+                            className="px-4 py-3 rounded-full font-semibold hover:bg-gray-900 inline-block mt-4"
                         >
                             Shop Now
                         </Link>
@@ -74,7 +74,7 @@ export default function Home({ products }: HomeProps) {
                     className="min-h-screen flex items-center justify-center bg-gray-50 py-20"
                 >
                     <div className="container mx-auto px-4">
-                        <h2 className="text-3xl  font-bold mb-6 text-center text-gray-800">Featured Products</h2>
+                        <h2 className="text-3xl  font-bold mb-6 text-center ">Featured Products</h2>
                         {products.length === 0 ? (
                             <p className="text-gray-700 text-center">No products available right now.</p>
                         ) : (
@@ -87,7 +87,7 @@ export default function Home({ products }: HomeProps) {
                                         transition={{ duration: 0.5 }}
                                         className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300"
                                     >
-                                        <h3 className="text-xl text-gray-800 font-semibold mb-2">
+                                        <h3 className="text-xl  font-semibold mb-2">
                                             {product.name}
                                         </h3>
                                         <p className="text-gray-600 mb-2">{product.description}</p>
@@ -109,7 +109,7 @@ export default function Home({ products }: HomeProps) {
                     className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-600 py-20"
                 >
                     <div className="container mx-auto px-4">
-                        <h2 className="text-3xl font-bold mb-12 text-center text-white">What Our Customers Say</h2>
+                        <h2 className="text-3xl font-bold mb-12 text-center ">What Our Customers Say</h2>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
@@ -120,7 +120,7 @@ export default function Home({ products }: HomeProps) {
                                 <p className="text-gray-700 italic text-lg">
                                     "E-Store has the best selection of gadgets. The customer service is amazing!"
                                 </p>
-                                <h3 className="mt-6 text-gray-800 font-bold">- John D.</h3>
+                                <h3 className="mt-6  font-bold">- John D.</h3>
                             </motion.div>
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
@@ -131,7 +131,7 @@ export default function Home({ products }: HomeProps) {
                                 <p className="text-gray-700 italic text-lg">
                                     "I love my new 4K TV. The shopping experience was smooth and hassle-free."
                                 </p>
-                                <h3 className="mt-6 text-gray-800 font-bold">- Sarah K.</h3>
+                                <h3 className="mt-6  font-bold">- Sarah K.</h3>
                             </motion.div>
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
@@ -142,7 +142,7 @@ export default function Home({ products }: HomeProps) {
                                 <p className="text-gray-700 italic text-lg">
                                     "Fast delivery, great prices, and top-notch products. Highly recommend!"
                                 </p>
-                                <h3 className="mt-6 text-gray-800 font-bold">- Mike P.</h3>
+                                <h3 className="mt-6  font-bold">- Mike P.</h3>
                             </motion.div>
                         </div>
                     </div>
