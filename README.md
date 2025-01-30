@@ -2,9 +2,9 @@
 
 E-Store is a full-stack application designed for learning and experimenting with web technologies. The project includes a GraphQL API for the backend and a React application for the frontend. It is currently under development and open for contributions.
 
-A short sneak-peek of the in-process homepage:
+A little sneak-peek of the in-process homepage(something amazing is cooking):
 
-![Home Page img](frontend/public/HomePage.png)
+![Home Page img](frontend/public/sneak-peak.png)
 
 ## Tech Stack
 
