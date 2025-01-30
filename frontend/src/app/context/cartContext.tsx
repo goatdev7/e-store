@@ -1,5 +1,5 @@
 // creating cart context
-
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { createContext, useState, useContext } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_CART, ADD_TO_CART, UPDATE_CART_ITEM, REMOVE_FROM_CART } from "../services/cart";
@@ -45,13 +45,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             }
         },
     });
-
     // all the mutations
     const [addToCartMutation] = useMutation(ADD_TO_CART);
     const [updateCartItemMutation] = useMutation(UPDATE_CART_ITEM);
     const [removeFromCartMutation] = useMutation(REMOVE_FROM_CART);
-
-
+    
+    
     // adding to cart
     const addToCart = async (productId: string, quantity: number) => {
         const { data } = await addToCartMutation({
@@ -61,7 +60,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setCart(data.addToCart); // updating the cart
         }
     }
-
+    
     // removing from cart
     const removeFromCart = async (productId: string) => {
         const { data } = await removeFromCartMutation({
@@ -71,7 +70,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setCart(data.removeFromCart);
         }
     }
-
+    
     // updating the cart item
     const updateCartItem = async (productId: string, quantity: number) => {
         const { data } = await updateCartItemMutation({
@@ -81,15 +80,15 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             setCart(data.updateFromCart);
         }
     }
-
+    
     return (
         <CartContext.Provider
-            value={{
-                cart,
-                addToCart,
-                updateCartItem,
-                removeFromCart
-            }}
+        value={{
+            cart,
+            addToCart,
+            updateCartItem,
+            removeFromCart
+        }}
         >
             {children}
         </CartContext.Provider>
@@ -98,3 +97,5 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
 // for usage across the app
 export const useCart = ()=> useContext(CartContext);
+
+/* eslint-enable @typescript-eslint/no-unused-vars */
