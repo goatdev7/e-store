@@ -6,7 +6,7 @@ interface LoginFormProps {
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (e: React.FormEvent) => Promise<void>;
     loading: boolean;
-    error: any;
+    error: Error | null;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ formData, handleChange, handleSubmit, loading, error }) => {

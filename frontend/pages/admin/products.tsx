@@ -1,19 +1,11 @@
-import { GetServerSideProps } from "next";
-import Link from "next/link";
-import { createApolloClient } from "@/app/services/client";
-import jwt from "jsonwebtoken";
 import { AuthContext } from "@/app/context/authContext";
 import { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
-import { ADD_PRODUCT, GET_PRODUCT, GET_PRODUCTS, UPDATE_PRODUCT, DELETE_PRODUCT } from "@/app/services/product";
+import { ADD_PRODUCT } from "@/app/services/product";
 import Router from "next/router";
-import { parse } from "cookie";
 
-interface AdminProductsPageProps {
-    isAdmin: boolean;
-}
 
-export default function AdminProductsPage({ isAdmin }: AdminProductsPageProps) {
+export default function AdminProductsPage() {
     const { token, role } = useContext(AuthContext);
     const [formData, setFormData] = useState({
         name: "",

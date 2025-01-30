@@ -118,7 +118,7 @@ export default function Home({ products }: HomeProps) {
                                 className="bg-white shadow-lg rounded-lg p-8 transform hover:-translate-y-1 transition-transform duration-300"
                             >
                                 <p className="text-gray-700 italic text-lg">
-                                    "E-Store has the best selection of gadgets. The customer service is amazing!"
+                                    &quot;E-Store has the best selection of gadgets. The customer service is amazing!&quot;
                                 </p>
                                 <h3 className="mt-6  font-bold">- John D.</h3>
                             </motion.div>
@@ -129,7 +129,7 @@ export default function Home({ products }: HomeProps) {
                                 className="bg-white shadow-lg rounded-lg p-8 transform hover:-translate-y-1 transition-transform duration-300"
                             >
                                 <p className="text-gray-700 italic text-lg">
-                                    "I love my new 4K TV. The shopping experience was smooth and hassle-free."
+                                    &quot;I love my new 4K TV. The shopping experience was smooth and hassle-free.&quot;
                                 </p>
                                 <h3 className="mt-6  font-bold">- Sarah K.</h3>
                             </motion.div>
@@ -140,7 +140,7 @@ export default function Home({ products }: HomeProps) {
                                 className="bg-white shadow-lg rounded-lg p-8 transform hover:-translate-y-1 transition-transform duration-300"
                             >
                                 <p className="text-gray-700 italic text-lg">
-                                    "Fast delivery, great prices, and top-notch products. Highly recommend!"
+                                    &quot;Fast delivery, great prices, and top-notch products. Highly recommend!&quot;
                                 </p>
                                 <h3 className="mt-6  font-bold">- Mike P.</h3>
                             </motion.div>

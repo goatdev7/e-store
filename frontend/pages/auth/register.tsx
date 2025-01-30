@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useMutation, gql } from "@apollo/client";
 import { AuthContext } from "../../src/app/context/authContext";
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import RegisterForm from "@/app/components/registerForm";
 import PopupText from "@/app/components/popupText";
 

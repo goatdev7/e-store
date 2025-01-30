@@ -1,7 +1,5 @@
 import React from 'react';
-interface SpinnerProps{
-    visible: boolean
-}
+
 const LoadingSpinner: React.FC = () => {
     return (
         <div className="flex items-center justify-center py-6 bg-current">

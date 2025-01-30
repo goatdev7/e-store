@@ -24,7 +24,7 @@ export default function ProductDetailPage({ product }: ProductDetailPageProps) {
     const [ PopupVisible, setPopupVisible ] = useState(false);
     const [popUpMessage, setPopupMsg ] = useState("Please login to add to cart");
     const { addToCart } = useCart();
-    const { role, token } = useContext(AuthContext);
+    const { token } = useContext(AuthContext);
 
     if (!product) {
         return (

@@ -1,6 +1,6 @@
 // Creating a shared apollo client 
-import { HttpLink, ApolloClient, InMemoryCache, ApolloLink, from, operationName } from "@apollo/client";
-import { ErrorLink, onError } from "@apollo/client/link/error";
+import { HttpLink, ApolloClient, InMemoryCache, ApolloLink, from } from "@apollo/client";
+import { onError } from "@apollo/client/link/error";
 import fetch from "cross-fetch";
 
 const httplink = new HttpLink({

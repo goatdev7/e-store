@@ -1,3 +1,4 @@
+import { ApolloError } from "@apollo/client";
 import React from "react";
 
 interface RegisterFormProps {
@@ -12,7 +13,7 @@ interface RegisterFormProps {
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (e: React.FormEvent) => Promise<void>;
     loading: boolean;
-    error: any;
+    error: ApolloError | undefined;
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({ formData, handleChange, handleSubmit, loading, error }) => {

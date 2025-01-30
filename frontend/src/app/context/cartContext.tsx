@@ -1,6 +1,6 @@
 // creating cart context
 
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, { createContext, useState, useContext } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_CART, ADD_TO_CART, UPDATE_CART_ITEM, REMOVE_FROM_CART } from "../services/cart";
 
@@ -37,7 +37,7 @@ export const CartContext = createContext<CartContextProps>({
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [cart, setCart] = useState<CartType | null>(null);
     // getting the data
-    const { data, loading, error } = useQuery(GET_CART, {
+    const { data } = useQuery(GET_CART, {
         fetchPolicy: "cache-and-network", // change it to network-only if cache is not updating
         onCompleted: (data) => {
             if (data?.getCart) {
