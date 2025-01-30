@@ -1,3 +1,4 @@
+import { ApolloError } from '@apollo/client';
 import Link from 'next/link';
 import React from 'react';
 
@@ -6,7 +7,7 @@ interface LoginFormProps {
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     handleSubmit: (e: React.FormEvent) => Promise<void>;
     loading: boolean;
-    error: Error | null;
+    error: ApolloError | undefined;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({ formData, handleChange, handleSubmit, loading, error }) => {
