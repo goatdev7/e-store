@@ -39,9 +39,9 @@ export default function Home({ products }: HomeProps) {
                     className="min-h-screen flex items-center justify-center text-center px-4 py-20 bg-gradient-to-r from-blue-500 to-blue-700 "
                 >
                     <div className="container mx-auto">
-                        <h1 className="text-5xl font-extrabold mb-4">Welcome to E-Store</h1>
+                        <h1 className="text-5xl font-extrabold mb-4">Welcome to an AI-Powered E-Store</h1>
                         <p className="text-lg mb-6">
-                            Your one-stop shop for the latest and greatest in electronics.
+                            Your one-stop shop for the latest and greatest in electronics powered by AI.
                         </p>
                         {featuredProduct && (
                             <div className="mb-6">
