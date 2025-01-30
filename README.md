@@ -88,13 +88,14 @@ To run E-Store on your local machine, follow these steps:
 
     4. Open the Application:
     Go to http://localhost:3000 to view the E-Store frontend.
-4. Stopping MongoDB
-    To stop your Docker container for MongoDB:
+4. Stopping MongoDB:
+
+    - To stop your Docker container for MongoDB:
     ```
     docker stop e-store-mongo
     ```
 
-    To remove it completely (and delete data if you’re not using a volume):
+    - To remove it completely (and delete data if you’re not using a volume):
     ```
     docker rm e-store-mongo
     ```
