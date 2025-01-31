@@ -3,6 +3,7 @@ import { createApolloClient } from "../src/app/services/client";
 import { gql } from "@apollo/client";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import { Grid2, Typography } from "@mui/material";
 
 const GET_PRODUCTS = gql`
   query {
@@ -27,79 +28,61 @@ interface HomeProps {
 }
 
 export default function Home({ products }: HomeProps) {
-    const featuredProduct = products.length > 0 ? products[3] : null;
+    const featuredProducts = products.slice(0, 7);
 
     return (
         <div className="min-h-screen min-w-full bg-gradient-to-b from-indigo-100 via-white to-white dark:from-indigo-800 dark:via-gray-900 dark:to-black transition-colors duration-500 flex flex-col">
             <div className="w-full">
-                <motion.section
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1 }}
-                    className="min-h-screen flex items-center justify-center text-center px-4 py-20 bg-gradient-to-r from-blue-500 to-blue-700 "
-                >
                     <div className="container mx-auto">
-                        <h1 className="text-5xl font-extrabold mb-4">Welcome to an AI-Powered E-Store</h1>
+                        <h1 className="text-5xl flex justify-center font-extrabold mb-4">Welcome to an AI-Powered E-Store</h1>
                         <p className="text-lg mb-6">
                             Your one-stop shop for the latest and greatest in electronics powered by AI.
                         </p>
-                        {featuredProduct && (
-                            <div className="mb-6">
-                                <h2 className="text-2xl font-bold">
-                                    Top Deal: {featuredProduct.name}
-                                </h2>
-                                <p className="text-md italic /90">
-                                    {featuredProduct.description}
-                                </p>
-                                <p className="text-xl font-semibold mt-2">
-                                    ${featuredProduct.price.toFixed(2)}
-                                </p>
+                        {/* Top Featured Products Section */}
+                        <motion.section
+                            id="products"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 1 }}
+                            className="flex items-center justify-center bg-gray-50 py-20"
+                        >
+                            <div className="container mx-auto px-4">
+                                <h2 className="text-3xl font-bold mb-6 text-center">Top Featured Products</h2>
+                                {featuredProducts.length === 0 ? (
+                                    <p className="text-gray-700 text-center">No products available right now.</p>
+                                ) : (
+                                    <Grid2 container spacing={5} justifyContent="center">
+                                        {featuredProducts.map((product) => (
+                                            <Grid2 item xs={12} sm={6} md={3} key={product.id}>
+                                                <motion.div
+                                                    initial={{ opacity: 0, y: 30 }}
+                                                    animate={{ opacity: 1, y: 0 }}
+                                                    transition={{ duration: 1 }}
+                                                    className="rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300"
+                                                >
+                                                    <Typography variant="h6" className="text-xl font-semibold mb-2">
+                                                        <p>{product.name}</p>
+                                                    </Typography>
+                                                    <Typography variant="body2" className="text-gray-600 mb-2">
+                                                        {product.description}
+                                                    </Typography>
+                                                    <Typography variant="h5" className="font-bold text-indigo-600">
+                                                        ${product.price.toFixed(2)}
+                                                    </Typography>
+                                                </motion.div>
+                                            </Grid2>
+                                        ))}
+                                    </Grid2>
+                                )}
                             </div>
-                        )}
+                        </motion.section>
                         <Link
-                            href="#products"
-                            className="px-4 py-3 rounded-full font-semibold hover:bg-gray-900 inline-block mt-4"
+                            href="/products"
+                            className="px-4 py-3 btn-primary rounded-full font-semibold hover:bg-gray-900 inline-block mt-4"
                         >
                             Shop Now
                         </Link>
                     </div>
-                </motion.section>
-
-                {/* Products Section */}
-                <motion.section
-                    id="products"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1 }}
-                    className="min-h-screen flex items-center justify-center bg-gray-50 py-20"
-                >
-                    <div className="container mx-auto px-4">
-                        <h2 className="text-3xl  font-bold mb-6 text-center ">Featured Products</h2>
-                        {products.length === 0 ? (
-                            <p className="text-gray-700 text-center">No products available right now.</p>
-                        ) : (
-                            <div className="grid text-black grid-cols-1 md:grid-cols-3 gap-6">
-                                {products.slice(0, 3).map((product) => (
-                                    <motion.div
-                                        key={product.id}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.5 }}
-                                        className="bg-white rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300"
-                                    >
-                                        <h3 className="text-xl  font-semibold mb-2">
-                                            {product.name}
-                                        </h3>
-                                        <p className="text-gray-600 mb-2">{product.description}</p>
-                                        <p className="font-bold text-indigo-600">
-                                            ${product.price.toFixed(2)}
-                                        </p>
-                                    </motion.div>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-                </motion.section>
 
                 {/* Testimonials Section */}
                 <motion.section

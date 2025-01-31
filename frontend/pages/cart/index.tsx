@@ -5,82 +5,21 @@ import { Trash2, MinusCircle, PlusCircle } from "lucide-react";
 import Link from "next/link";
 
 interface CartItem {
-    product: {
-        id: string;
-        name: string;
-        price: number;
-        quantity: number;
-    };
+  product: {
+    id: string;
+    name: string;
+    price: number;
     quantity: number;
+  };
+  quantity: number;
 }
 
 
 export default function CartPage() {
-    const { cart, updateCartItem, removeFromCart } = useCart();
-    const { token } = useContext(AuthContext);
+  const { cart, updateCartItem, removeFromCart } = useCart();
+  const { token } = useContext(AuthContext);
 
-//     if (!token) {
-//         return (
-//             <div className="min-h-screen flex items-center justify-center">
-//                 <p className="text-gray-700">Please Login to view Cart items.</p>
-//             </div>
-//         );
-//     }
-
-//     if (!cart || !cart.items || cart.items.length === 0) {
-//         return (
-//             <div className="min-h-screen flex items-center justify-center">
-//                 <p className="text-gray-700">No items in the cart.</p>
-//             </div>
-//         );
-//     }
-
-//     const handleQuantityChange = async (productId: string, newQuantity: number) => {
-//         try {
-//             await updateCartItem(productId, newQuantity);
-//         } catch (error) {
-//             console.error("Error updating quantity:", error);
-//             // We will implement the UI for error handling later
-//         }
-//     }
-
-//     return (
-//         <div className="min-h-screen bg-gray-50 py-10">
-//             <div className="container mx-auto px-4">
-//                 <h1 className="text-3xl font-bold mb-6">Your Cart</h1>
-//                 <div className="text-gray-500  space-y-4">
-//                     {cart.items.map((item: CartItem) => (
-//                         <div key={item.product.id} className="bg-white p-4 rounded shadow">
-//                             <h2 className="text-xl font-semibold">{item.product.name}</h2>
-//                             <p className="text-gray-600">Price: ${item.product.price}</p>
-//                             <p className="text-gray-600">Available Stock: {item.product.quantity}</p>
-//                             <div className="mt-2 flex items-center space-x-2">
-//                                 <label htmlFor="quantity" className="font-medium">Quantity:</label>
-//                                 <input
-//                                     type="number"
-//                                     id="quantity"
-//                                     className="border rounded w-20 px-2 py-1"
-//                                     value={item.quantity}
-//                                     min={1}
-//                                     max={item.product.quantity}
-//                                     onChange={(e) => handleQuantityChange(item.product.id, Number(e.target.value))}
-//                                 />
-//                                 <button
-//                                     onClick={() => removeFromCart(item.product.id)}
-//                                     className="bg-red-900 text-black px-3 py-1 rounded hover:bg-red-600"
-//                                 >
-//                                     Remove
-//                                 </button>
-//                             </div>
-//                         </div>
-//                     ))}
-//                 </div>
-
-//             </div>
-//         </div>
-//     );
-// };
-if (!token) {
+  if (!token) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
         <div className="text-center p-8 bg-white rounded-lg shadow-lg">
@@ -93,13 +32,13 @@ if (!token) {
 
   if (!cart || !cart.items || cart.items.length === 0) {
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
-          <Link href="/products">  
-        <div className="text-center p-8 text-gray-500 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Your Cart is Empty</h2>
-          <p className="text-gray-600">Start shopping to add items to your cart.</p>
-        </div>
-      </Link>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
+        <Link href="/products">
+          <div className="text-center p-8 text-gray-500 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-bold text-gray-800 mb-2">Your Cart is Empty</h2>
+            <p className="text-gray-600">Start shopping to add items to your cart.</p>
+          </div>
+        </Link>
       </div>
     );
   }
@@ -145,14 +84,16 @@ if (!token) {
 
                   <div className="flex items-center space-x-6">
                     <div className="flex items-center space-x-3">
-                      <button 
-                        onClick={() => handleQuantityChange(item.product.id, item.quantity - 1)}
-                        className="text-gray-500 hover:text-gray-700 transition-colors"
-                        disabled={item.quantity <= 1}
-                      >
-                        <MinusCircle size={20} />
-                      </button>
-                      
+                      {item.quantity > 1 ? (
+                        <button
+                          onClick={() => handleQuantityChange(item.product.id, item.quantity - 1)}
+                          className="text-gray-500 hover:text-gray-700 transition-colors"
+                          disabled={item.quantity <= 1}
+                        >
+                          <MinusCircle size={20} />
+                        </button>) : null
+                      }
+
                       <input
                         type="number"
                         id={`quantity-${item.product.id}`}
@@ -162,8 +103,8 @@ if (!token) {
                         max={item.product.quantity}
                         onChange={(e) => handleQuantityChange(item.product.id, Number(e.target.value))}
                       />
-                      
-                      <button 
+
+                      <button
                         onClick={() => handleQuantityChange(item.product.id, item.quantity + 1)}
                         className="text-gray-500 hover:text-gray-700 transition-colors"
                         disabled={item.quantity >= item.product.quantity}

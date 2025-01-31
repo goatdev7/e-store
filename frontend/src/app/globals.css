@@ -1,18 +1,36 @@
- @tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Setting a global text and background using Tailwind classes.
-   We apply them to the html element so it affects the entire page. */
-html {
-    @apply bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100;
-    font-family: Arial, Helvetica, sans-serif;
+/* Global Styling */
+body {
+  @apply bg-background text-textPrimary;
 }
 
-body {
-    @apply m-0 p-0;
-}  
+/* Navbar */
+.navbar {
+  @apply bg-white border-b border-borderColor text-textPrimary;
+}
 
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+  @apply text-primary font-bold;
+}
+
+/* Buttons */
+.btn-primary {
+  @apply bg-primary text-white px-6 py-2 rounded-md hover:bg-opacity-80 transition;
+}
+
+/* Card Style */
+.card {
+  @apply bg-cardBg shadow-lg rounded-lg p-6 border border-borderColor;
+}
+
+/* Links */
+a {
+  @apply text-primary hover:underline;
+}
 
 /* Remove dark mode styles and force light mode */
 /* html {
