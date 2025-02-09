@@ -33,13 +33,14 @@ export default function CartPage() {
   if (!cart || !cart.items || cart.items.length === 0) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100">
-        <Link href="/products">
-          <div className="text-center p-8 text-gray-500 rounded-lg shadow-lg">
-            <h2 className="text-2xl font-bold text-gray-800 mb-2">Your Cart is Empty</h2>
-            <p className="text-gray-600">Start shopping to add items to your cart.</p>
-          </div>
-        </Link>
-      </div>
+        <div className="text-center p-8 text-gray-500 rounded-lg shadow-lg">
+          <h2 className="text-2xl font-bold text-gray-800 mb-2">Your Cart is Empty</h2>
+          <p className="text-gray-600">Start shopping to add items to your cart.</p>
+          <Link href="/products">
+            <p className="text-gray-600">Browse Products</p>
+          </Link>
+        </div>
+      </div >
     );
   }
 
