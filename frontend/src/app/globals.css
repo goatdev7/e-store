@@ -4,40 +4,30 @@
 
 /* Global Styling */
 body {
-  @apply bg-background text-textPrimary;
+  @apply bg-gray-50 text-gray-800;
 }
 
 /* Navbar */
 .navbar {
-  @apply bg-white border-b border-borderColor text-textPrimary;
+  @apply bg-white shadow-md text-gray-900;
 }
 
 /* Headings */
 h1, h2, h3, h4, h5, h6 {
-  @apply text-primary font-bold;
+  @apply text-blue-700 font-bold;
 }
 
 /* Buttons */
 .btn-primary {
-  @apply bg-primary text-white px-6 py-2 rounded-md hover:bg-opacity-80 transition;
+  @apply bg-blue-600 text-white px-6 py-2 rounded-md hover:bg-blue-700 transition;
 }
 
 /* Card Style */
 .card {
-  @apply bg-cardBg shadow-lg rounded-lg p-6 border border-borderColor;
+  @apply bg-white shadow-md rounded-lg p-6 border border-gray-200;
 }
 
 /* Links */
 a {
-  @apply text-primary hover:underline;
+  @apply text-blue-600 hover:underline;
 }
-
-/* Remove dark mode styles and force light mode */
-/* html {
-  @apply bg-white text-gray-500;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-body {
-  @apply m-0 p-0;
-} */

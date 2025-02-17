@@ -4,6 +4,8 @@ import { gql } from "@apollo/client";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Grid2, Typography } from "@mui/material";
+import Grid from "@mui/material/Grid";
+
 
 const GET_PRODUCTS = gql`
   query {
@@ -51,9 +53,9 @@ export default function Home({ products }: HomeProps) {
                                 {featuredProducts.length === 0 ? (
                                     <p className="text-gray-700 text-center">No products available right now.</p>
                                 ) : (
-                                    <Grid2 container spacing={5} justifyContent="center">
+                                    <Grid container spacing={5} justifyContent="center">
                                         {featuredProducts.map((product) => (
-                                            <Grid2 item xs={12} sm={6} md={3} key={product.id}>
+                                            <Grid component="div" xs={12} sm={6} md={3} key={product.id}>
                                                 <motion.div
                                                     initial={{ opacity: 0, y: 30 }}
                                                     animate={{ opacity: 1, y: 0 }}
@@ -70,9 +72,9 @@ export default function Home({ products }: HomeProps) {
                                                         ${product.price.toFixed(2)}
                                                     </Typography>
                                                 </motion.div>
-                                            </Grid2>
+                                            </Grid>
                                         ))}
-                                    </Grid2>
+                                    </Grid>
                                 )}
                             </div>
                         </motion.section>

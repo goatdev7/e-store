@@ -16,6 +16,7 @@ interface ProductPageProps {
 }
 
 export default function Products({ products }: ProductPageProps) {
+  const productsShow = products.slice(0, 6);
   return (
     <div className="min-h-screen text-black bg-gray-50 py-10">
       <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
@@ -24,7 +25,7 @@ export default function Products({ products }: ProductPageProps) {
           <p className="text-gray-600">No products available.</p>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {products.map((product) => (
+            {productsShow.map((product) => (
               <div key={product.id} className="bg-white rounded-lg shadow-md p-6">
                 <h3 className="text-xl font-semibold mb-3">{product.name}</h3>
                 <p className="text-gray-600 mb-3">{product.description}</p>
