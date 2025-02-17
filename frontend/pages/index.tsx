@@ -3,7 +3,7 @@ import { createApolloClient } from "../src/app/services/client";
 import { gql } from "@apollo/client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Grid2, Typography } from "@mui/material";
+import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
 
 
@@ -35,19 +35,20 @@ export default function Home({ products }: HomeProps) {
     return (
         <div className="min-h-screen min-w-full bg-gradient-to-b from-indigo-100 via-white to-white dark:from-indigo-800 dark:via-gray-900 dark:to-black transition-colors duration-500 flex flex-col">
             <div className="w-full">
-                    <div className="container mx-auto">
-                        <h1 className="text-5xl flex justify-center font-extrabold mb-4">Welcome to an AI-Powered E-Store</h1>
-                        <p className="text-lg mb-6">
-                            Your one-stop shop for the latest and greatest in electronics powered by AI.
-                        </p>
-                        {/* Top Featured Products Section */}
-                        <motion.section
-                            id="products"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            transition={{ duration: 1 }}
-                            className="flex items-center justify-center bg-gray-50 py-20"
-                        >
+                <div className="container mx-auto">
+                    <h1 className="text-5xl flex justify-center font-extrabold mb-4">Welcome to an AI-Powered E-Store</h1>
+                    <p className="text-lg mb-6">
+                        Your one-stop shop for the latest and greatest in electronics powered by AI.
+                    </p>
+                    {/* Top Featured Products Section */}
+                    <motion.section
+                        id="products"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1 }}
+                        className="flex items-center justify-center bg-gray-50 py-20"
+                    >
+                        <div className="flex items-center justify-center">
                             <div className="container mx-auto px-4">
                                 <h2 className="text-3xl font-bold mb-6 text-center">Top Featured Products</h2>
                                 {featuredProducts.length === 0 ? (
@@ -77,7 +78,10 @@ export default function Home({ products }: HomeProps) {
                                     </Grid>
                                 )}
                             </div>
-                        </motion.section>
+                        </div>
+                    </motion.section>
+                    <div className="text-3xl font-bold mb-6 text-center">
+
                         <Link
                             href="/products"
                             className="px-4 py-3 btn-primary rounded-full font-semibold hover:bg-gray-900 inline-block mt-4"
@@ -85,13 +89,14 @@ export default function Home({ products }: HomeProps) {
                             Shop Now
                         </Link>
                     </div>
+                </div>
 
                 {/* Testimonials Section */}
                 <motion.section
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
-                    className="min-h-screen flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-600 py-20"
+                    className=" flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-600"
                 >
                     <div className="container mx-auto px-4">
                         <h2 className="text-3xl font-bold mb-12 text-center ">What Our Customers Say</h2>
