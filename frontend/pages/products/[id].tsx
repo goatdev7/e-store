@@ -6,6 +6,7 @@ import { useCart } from "@/app/context/cartContext";
 import { useContext, useState } from "react";
 import { AuthContext } from "@/app/context/authContext";
 import PopupText from "@/app/components/popupText";
+import Router from "next/router";
 
 interface Product {
     id: string;
@@ -67,7 +68,13 @@ export default function ProductDetailPage({ product }: ProductDetailPageProps) {
             <PopupText
             message={popUpMessage}
             visible={PopupVisible}
-            onClose={() => setPopupVisible(false)}
+            onClose={() => {
+                setPopupVisible(false);
+                setTimeout(() => {
+                    Router.push("/auth/login");
+                }, 200);
+            }
+            }
             >
             </PopupText>
         </div>
