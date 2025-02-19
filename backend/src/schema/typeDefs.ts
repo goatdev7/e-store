@@ -24,6 +24,7 @@ export const typeDefs = gql`
     description: String
     price: Float!
     quantity: Int!
+    imageUrl: String
     }
 
     type CartItem{
@@ -56,6 +57,7 @@ export const typeDefs = gql`
         description: String
         price: Float!
         quantity:Int!
+        imageUrl: String
     }
         
     type Query{

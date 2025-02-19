@@ -8,6 +8,7 @@ export const GET_PRODUCT = gql`
         description
         price
         quantity
+        iamgeUrl
         }
     }
 `;
@@ -20,6 +21,7 @@ export const GET_PRODUCTS = gql`
         description
         price
         quantity
+        imageUrl
         }
     }
 `;
@@ -32,6 +34,7 @@ export const ADD_PRODUCT = gql`
         description
         price
         quantity
+        imageUrl
         }
     }
 `;
@@ -44,6 +47,7 @@ export const UPDATE_PRODUCT = gql`
         description
         price 
         quantity
+        imageUrl
         }
     }
 `;

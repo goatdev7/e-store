@@ -12,8 +12,11 @@ export default function AdminProductsPage() {
         description: "",
         price: 0,
         quantity: 1,
+        imageUrl:"",
     });
 
+    const [file, setFile] = useState<File | null>(null);
+    const [uploading, setUploading] = useState(false);
     const [addProduct, { loading, error }] = useMutation(ADD_PRODUCT);
 
 
@@ -31,23 +34,57 @@ export default function AdminProductsPage() {
             : e.target.value;
         setFormData({ ...formData, [e.target.name]: value });
     };
+    // Handle file input separately
+    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files && e.target.files[0]) {
+            setFile(e.target.files[0]);
+        }
+    };
+    // Function to upload image using your Next.js API endpoint
+    const uploadImage = async (): Promise<string> => {
+        console.log("file is: ", file);
+        if (!file) return "";
+        const uploadData = new FormData();
+        uploadData.append("file", file);
+
+        try {
+            setUploading(true);
+
+            const res = await fetch("/api/upload", {
+                method: "POST",
+                body: uploadData,
+            });
+            const data = await res.json();
+            return data.url; // Assuming /api/upload returns { url: <image URL>, ... }
+        } catch (err) {
+            console.error("Error uploading image:", err);
+            return "";
+        } finally {
+            setUploading(false);
+        }
+    };
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        try {
-            await addProduct({
-                variables: { product: formData },
-                context: {
-                    headers: {
-                        authorization: `Bearer ${token}` // Add your auth token
-                    }
-                }
-            });
-            Router.push("/products");
-        } catch (err) {
-            console.error("Error adding product:", err);
+        let imageUrl = formData.imageUrl;
+        if (file) {
+          imageUrl = await uploadImage();
+          setFormData((prev) => ({ ...prev, imageUrl }));
         }
-    };
+        try {
+          await addProduct({
+            variables: { product: { ...formData, imageUrl } },
+            context: {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            },
+          });
+          Router.push("/products");
+        } catch (err) {
+          console.error("Error adding product:", err);
+        }
+      };
 
     return (
         <div className="min-h-screen text-black bg-gray-50 py-10">
@@ -100,6 +137,16 @@ export default function AdminProductsPage() {
                             required
                         />
                     </div>
+                    <div className="mb-6">
+                        <label className="block font-medium mb-1">Product Image</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileChange}
+                            className="w-full"
+                        />
+                        {uploading && <p className="text-sm text-gray-600">Uploading image...</p>}
+                    </div>
                     <button
                         type="submit"
                         disabled={loading}
@@ -111,5 +158,7 @@ export default function AdminProductsPage() {
                 </form>
             </div>
         </div>
+
+        
     );
 }

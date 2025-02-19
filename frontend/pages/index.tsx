@@ -30,7 +30,7 @@ interface HomeProps {
 }
 
 export default function Home({ products }: HomeProps) {
-    const featuredProducts = products.slice(0, 7);
+    const featuredProducts = products.slice(0, 6);
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-indigo-100 via-white to-white dark:from-indigo-800 dark:via-gray-900 dark:to-black transition-colors duration-500">
@@ -47,12 +47,11 @@ export default function Home({ products }: HomeProps) {
                     className="flex items-center items-center justify-center bg-gray-50 py-20"
                 >
                     <div className="container px-4 mb-6">
-
                         <h2 className="text-3xl font-bold mb-6 text-center">Top Featured Products</h2>
                         {featuredProducts.length === 0 ? (
                             <p className="text-gray-700 text-center">No products available right now.</p>
                         ) : (
-                            <Grid container spacing={5} justifyContent="center">
+                            <Grid container spacing={5} justifyContent="center" marginTop={6}>
                                 {featuredProducts.map((product) => (
                                     <Grid component="div" xs={12} sm={6} md={4} lg={3} key={product.id}>
                                         <motion.div
@@ -62,8 +61,9 @@ export default function Home({ products }: HomeProps) {
                                                 scale: 1.1,
                                                 transition: { duration: 0.5 }
                                               }}
-                                              style={{ transformStyle: 'preserve-3d' }}
-                                            className="rounded-lg shadow-md p-6 hover:shadow-xl transition-shadow duration-300"
+                                            style={{ transformStyle: 'preserve-3d' }}
+                                            transition={{ duration: 0.5, delay: 0.2 }}
+                                            className="rounded-lg shadow-md py-8 p-6 hover:shadow-xl transition-shadow duration-300"
                                         >
                                             <Typography variant="h6" className="text-xl font-semibold mb-2">
                                                 <p>{product.name}</p>

@@ -9,6 +9,7 @@ interface Product {
   description: string;
   price: number;
   quantity: number;
+  imageUrl: string;
 }
 
 interface ProductPageProps {
@@ -16,28 +17,37 @@ interface ProductPageProps {
 }
 
 export default function Products({ products }: ProductPageProps) {
-  const productsShow = products.slice(0, 6);
   return (
-    <div className="min-h-screen text-black bg-gray-50 py-10">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 text-center">
-        <h1 className="text-4xl font-bold mb-8">All Products</h1>
+    <div className="min-h-screen bg-gray-50 py-10">
+      <div className="container mx-auto px-6">
+        <h1 className="text-4xl font-bold text-center mb-8">All Products</h1>
         {products.length === 0 ? (
-          <p className="text-gray-600">No products available.</p>
+          <p className="text-center text-gray-600">No products available.</p>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {productsShow.map((product) => (
-              <div key={product.id} className="bg-white rounded-lg shadow-md p-6">
-                <h3 className="text-xl font-semibold mb-3">{product.name}</h3>
-                <p className="text-gray-600 mb-3">{product.description}</p>
-                <p className="font-bold text-indigo-700 mb-4">
-                  ${product.price.toFixed(2)}
-                </p>
-                <Link
-                  href={`/products/${product.id}`}
-                  className="inline-block bg-indigo-600 text-white py-2 px-4 rounded-lg hover:bg-indigo-700"
-                >
-                  View Details
-                </Link>
+          <div className="grid sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {products.map((product) => (
+              <div key={product.id} className="bg-white rounded-lg shadow overflow-hidden">
+                {product.imageUrl && (
+                  <img
+                    src={product.imageUrl}
+                    alt={product.name}
+                    className="w-4 h-4 object-cover"
+                  />
+                )}
+                <div className="p-4">
+                  <h2 className="text-xl font-semibold mb-2">{product.name}</h2>
+                  <p className="text-gray-600 mb-2">
+                    {product.description.slice(0, 80)}...
+                  </p>
+                  <p className="text-indigo-700 font-bold mb-4">
+                    ${product.price.toFixed(2)}
+                  </p>
+                  <Link href={`/products/${product.id}`} className="block text-center bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700">
+                    
+                      View Details
+                    
+                  </Link>
+                </div>
               </div>
             ))}
           </div>
