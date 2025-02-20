@@ -2,6 +2,7 @@ import { GetServerSideProps } from "next";
 import { createApolloClient } from "@/app/services/client";
 import { GET_PRODUCTS } from "@/app/services/product";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Product {
   id: string;
@@ -28,10 +29,14 @@ export default function Products({ products }: ProductPageProps) {
             {products.map((product) => (
               <div key={product.id} className="bg-white rounded-lg shadow overflow-hidden">
                 {product.imageUrl && (
-                  <img
+
+                  <Image
                     src={product.imageUrl}
                     alt={product.name}
                     className="w-4 h-4 object-cover"
+                    width={20}
+                    height={20}
+                    
                   />
                 )}
                 <div className="p-4">
