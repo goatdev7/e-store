@@ -15,13 +15,14 @@ A little sneak-peek of the in-process homepage(something amazing is cooking):
 
 ### Frontend
 - React: For building the user interface.
-- Next: Utilizing the power of Next.js to make the prject SEO friendly
+- Next: Utilizing the power of Next.js to make the project SEO friendly
 
 ## Features
 
 - Backend: Fully functional GraphQL API for handling data operations.
 - Frontend: Interactive React UI to consume the API.
 - Modular and extensible design to support additional functionality.
+- Digital Asset Management: Integrated with Cloudinary for managing images and media
 
 ## Contributing
 
