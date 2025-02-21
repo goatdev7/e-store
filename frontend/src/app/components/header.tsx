@@ -30,10 +30,10 @@ const Header: React.FC = () => {
           </button>
         ) : (
           <>
-            <Link href="/auth/login" className="text-gray-700 hover:text-indigo-600">
+            <Link href="/auth/login" className="text-gray-700 hover:text-indigo-600 hover:no-underline">
               Login
             </Link>
-            <Link href="/auth/register" className="text-gray-700 hover:text-indigo-600">
+            <Link href="/auth/register" className="text-gray-700 hover:text-indigo-600 hover:no-underline">
               Register
             </Link>
           </>
