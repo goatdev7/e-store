@@ -33,27 +33,28 @@ export default function Home({ products }: HomeProps) {
     const featuredProducts = products.slice(0, 6);
 
     return (
-        <div className="min-h-screen bg-gradient-to-b from-indigo-100 via-white to-white dark:from-indigo-800 dark:via-gray-900 dark:to-black transition-colors duration-500">
-                <h1 className="text-5xl flex justify-center font-extrabold mb-4">Welcome to an AI-Powered E-Store</h1>
+        <div className="min-h-screen bg-standard">
+                <h1 className="text-3xl flex justify-center mb-4">Welcome to an AI-Powered E-Store</h1>
                 <p className="text-lg mb-6 text-center">
                     Your one-stop shop for the latest and greatest in electronics powered by AI.
                 </p>
+
                 {/* Top Featured Products Section */}
                 <motion.section
                     id="products"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
-                    className="flex items-center items-center justify-center bg-gray-50 py-20"
+                    className="flex items-center items-center justify-center py-10"
                 >
                     <div className="container px-4 mb-6">
                         <h2 className="text-3xl font-bold mb-6 text-center">Top Featured Products</h2>
                         {featuredProducts.length === 0 ? (
                             <p className="text-gray-700 text-center">No products available right now.</p>
                         ) : (
-                            <Grid container spacing={5} justifyContent="center" marginTop={6}>
+                            <Grid container rowGap={5} columnGap={5} justifyContent="center" marginTop={6} >
                                 {featuredProducts.map((product) => (
-                                    <Grid component="div" xs={12} sm={6} md={4} lg={3} key={product.id}>
+                                    <Grid component="div" xs={12} sm={6} md={3} lg={3} key={product.id} className="bg-white shadow-lg rounded-lg space-x-4">
                                         <motion.div
                                             initial={{ opacity: 0, y: 30 }}
                                             animate={{ opacity: 1, y: 0 }}
@@ -68,7 +69,7 @@ export default function Home({ products }: HomeProps) {
                                             <Typography variant="h6" className="text-xl font-semibold mb-2">
                                                 <p>{product.name}</p>
                                             </Typography>
-                                            <Typography variant="body2" className="text-gray-600 mb-2">
+                                            <Typography variant="body2" className="text-gray-600 mb-2 truncate">
                                                 {product.description}
                                             </Typography>
                                             <Typography variant="h5" className="font-bold text-indigo-600">
@@ -85,7 +86,7 @@ export default function Home({ products }: HomeProps) {
                 <div className="mb-6 text-3xl font-bold text-center">
                     <Link
                         href="/products"
-                        className="btn-primary rounded-full font-semibold hover:bg-gray-900 "
+                        className="btn-primary"
                     >
                         Shop Now
                     </Link>
@@ -96,9 +97,9 @@ export default function Home({ products }: HomeProps) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1 }}
-                    className=" flex items-center justify-center bg-gradient-to-r from-indigo-500 to-purple-600"
+                    className=" flex items-center justify-center"
                 >
-                    <div className="container mx-auto px-4">
+                    <div className="container mx-auto py-10 px-4">
                         <h2 className="text-3xl font-bold mb-12 text-center ">What Our Customers Say</h2>
                         <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
                             <motion.div
