@@ -5,6 +5,7 @@ import { AuthContext } from '../context/authContext';
 
 const Header: React.FC = () => {
   const { isLoggedIn, logout } = useContext(AuthContext);
+  const { role, token } = useContext(AuthContext);
 
   return (
     <header className="w-full bg-gradient-to-r from-purple-100 to-purple-300 transition-colors duration-500 shadow p-4 flex items-center justify-between ">
@@ -37,6 +38,11 @@ const Header: React.FC = () => {
               Register
             </Link>
           </>
+        )}
+        {role === "admin" && (
+          <Link href="/admin/products" className="text-gray-700 hover:text-indigo-600 hover:no-underline">
+            Admin
+          </Link>
         )}
 
       </nav>

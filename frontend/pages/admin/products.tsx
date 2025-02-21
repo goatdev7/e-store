@@ -3,7 +3,7 @@ import { useState, useContext } from "react";
 import { useMutation } from "@apollo/client";
 import { ADD_PRODUCT, UPDATE_PRODUCT, DELETE_PRODUCT } from "@/app/services/product";
 import Router from "next/router";
-
+import DeleteProductForm from "./deleteProducts";
 
 export default function AdminProductsPage() {
     const { token, role } = useContext(AuthContext);
@@ -22,7 +22,6 @@ export default function AdminProductsPage() {
     const [buttonColor, setButtonColor] = useState("bg-indigo-600");
     const [addProduct, { loading, error }] = useMutation(ADD_PRODUCT);
     const [updateProduct, { loading: updateLoading, error: updateError }] = useMutation(UPDATE_PRODUCT);
-    const [deleteProduct, { loading: deleteLoading, error: deleteError }] = useMutation(DELETE_PRODUCT);
 
 
     if (role !== "admin") {
@@ -90,6 +89,7 @@ export default function AdminProductsPage() {
             console.error("Error adding product:", err);
         }
     };
+
     const handleDelete = async (e: React.FormEvent) => {
 
     };
@@ -233,70 +233,31 @@ export default function AdminProductsPage() {
                 </form>
             </div>
 
-
-                
             <div className="mb-6 px-4">
 
                 <button
                     onClick={() => {
                         setDeleteActive(!deleteActive);
-                        if (buttonText === "Delete Product" ){
+                        if (buttonText === "Delete Product") {
                             setButtonColor("bg-gray-200");
                             setButtonText("Cancel");
-                        }   
-                        else{
+                        }
+                        else {
                             setButtonText("Delete Product");
                             setButtonColor("bg-indigo-600");
                         }
                     }}
-                    className ={`${buttonColor} text-white rounded hover:bg-indigo-700 py-2 px-4 rounded`} 
-                           
-                    >
+                    className={`${buttonColor} text-white rounded hover:bg-indigo-700 py-2 px-4 rounded`}
+
+                >
                     {buttonText}
                 </button>
             </div>
-            
+
 
             {deleteActive && (
-                <div className="mb-6 px-6">
-                    <form onSubmit={handleDelete} className="bg-white p-6 rounded shadow-md max-w-sm">
-                        <h2 className="text-xl font-semibold mb-4">Delete Product</h2>
-                        <div className="mb-4">
-                            <label className="block font-medium mb-1">Name*</label>
-                            <input
-                                type="text"
-                                name="name"
-                                className="w-full border rounded px-3 py-2"
-                                value={formData.name}
-                                // onChange={handleChange}
-                                required
-                            />
-                        </div>
-                        <div className="mb-4">
-                            <label className="block font-medium mb-1">ProductId</label>
-                            <input
-                                type="text"
-                                name="description"
-                                className="w-full border rounded px-3 py-2"
-                                value={formData.description}
-                                // onChange={handleChange}
-                            />
-                        </div>
-
-                        <button
-                            type="submit"
-                            disabled={loading}
-                            className={`w-full py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
-                        >
-                            {deleteLoading ? "Deleting..." : "Delete Product"}
-                        </button>
-                        {deleteError && <p className="text-red-600 mt-4">Error: {deleteError.message}</p>}
-                    </form>
-                </div>
-
+                <DeleteProductForm />
             )}
         </div>
-
-
     );
 }
