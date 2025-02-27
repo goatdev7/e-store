@@ -3,24 +3,31 @@ import { AuthContext } from "@/app/context/authContext";
 import { useMutation } from "@apollo/client";
 import { ADD_PRODUCT } from "@/app/services/product";
 import { useRouter } from "next/router";
-import Form from 'antd/lib/form';
-import Input from 'antd/lib/input';
-import InputNumber from 'antd/lib/input-number';
-import Button from 'antd/lib/button';
-import Upload from 'antd/lib/upload';
-import message from 'antd/lib/message';
-import Layout from 'antd/lib/layout';
-import Card from 'antd/lib/card';
-import Row from 'antd/lib/row';
-import Col from 'antd/lib/col';
-import Divider from 'antd/lib/divider';
-import Steps from 'antd/lib/steps';
-import Result from 'antd/lib/result';
 import TextArea from 'antd/lib/input/TextArea';
-import DollarOutlined from '@ant-design/icons/DollarOutlined';
-import InboxOutlined from '@ant-design/icons/InboxOutlined';
-import ShoppingOutlined from '@ant-design/icons/ShoppingOutlined';
-import CheckCircleOutlined from '@ant-design/icons/CheckCircleOutlined';
+
+import { 
+    Form, 
+    Input, 
+    InputNumber, 
+    Button, 
+    Upload, 
+    message, 
+    Layout, 
+    Card, 
+    Row, 
+    Col, 
+    Divider, 
+    Steps,
+    Result 
+  } from 'antd';
+
+
+import { 
+    DollarOutlined, 
+    InboxOutlined, 
+    ShoppingOutlined, 
+    CheckCircleOutlined 
+  } from '@ant-design/icons';
 
 const { Content } = Layout;
 const { Step } = Steps;
