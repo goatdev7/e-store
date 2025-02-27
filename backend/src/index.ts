@@ -28,7 +28,6 @@ const startServer = async () => {
                         const decodedToken = jwt.verify(token, SECRET_KEY) as any;
                         return { user: decodedToken };
                     } catch (error) {
-                        console.error("Invalid Token", token);
                         throw new AuthenticationError("Authentication token is invalid or expired!");
                     }
 

@@ -19,9 +19,12 @@ import DashboardOutlined from '@ant-design/icons/DashboardOutlined';
 import ShoppingOutlined from '@ant-design/icons/ShoppingOutlined';
 import { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
-import { GET_PRODUCTS } from '@/app/services/product';
+import { GET_PRODUCTS, DELETE_PRODUCT } from '@/app/services/product';
+import { useMutation } from '@apollo/client';
 import { createApolloClient } from "../../src/app/services/client";
-
+import { AuthContext } from '@/app/context/authContext';
+import { useContext } from 'react';
+import Result from 'antd/lib/result';
 const { Header, Content, Sider } = Layout;
 
 interface Product {
@@ -42,7 +45,8 @@ const AllProducts = ({ products: initialProducts }: AllProductsProps) => {
   const [products, setProducts] = useState<Product[]>(initialProducts);
   const [loading, setLoading] = useState(false);
   const [searchText, setSearchText] = useState('');
-
+  const {role} = useContext(AuthContext);
+  const [deleteProduct] = useMutation(DELETE_PRODUCT);
   // Calculate statistics
   const totalProducts = products.length;
   const totalValue = products.reduce((sum, product) => sum + (product.price * product.quantity), 0);
@@ -55,6 +59,7 @@ const AllProducts = ({ products: initialProducts }: AllProductsProps) => {
   const handleDelete = async (productId: string) => {
     try {
       // Implement your delete mutation here
+      await deleteProduct({ variables: { id: productId } });
       message.success('Product deleted successfully');
       setProducts(products.filter(p => p.id !== productId));
     } catch (error) {
@@ -129,8 +134,21 @@ const AllProducts = ({ products: initialProducts }: AllProductsProps) => {
     },
   ];
 
+  if (role !== "admin") {
+    return <Result
+    status="403"
+    title="403"
+    subTitle="Sorry, you are not authorized to access this page."
+    extra={
+      <Button type="primary" onClick={() => router.push('/')}>
+        Back Home
+      </Button>
+    }
+  />
+  }
+
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ minHeight: '100vh' }} className="bg-standard">
       <Sider width={200} theme="light">
         <div className="p-4">
         </div>

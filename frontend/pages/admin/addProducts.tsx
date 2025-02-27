@@ -29,6 +29,7 @@ export default function AddProduct() {
     const router = useRouter();
     const { token, role } = useContext(AuthContext);
     const [form] = Form.useForm();
+    const [formData, setFormData] = useState({});
     const [currentStep, setCurrentStep] = useState(0);
     const [imageUrl, setImageUrl] = useState<string>('');
     const [uploading, setUploading] = useState(false);
@@ -56,12 +57,12 @@ export default function AddProduct() {
 
         try {
             setUploading(true);
-            // const res = await fetch("/api/upload", {
-            //     method: "POST",
-            //     body: uploadData,
-            // });
-            // const data = await res.json();
-            setImageUrl("https://res.cloudinary.com/dx5ygntlk/image/upload/v1740183133/e-store/products/ummba4pqbsbnhkkjhzt4.jpg");
+            const res = await fetch("/api/upload", {
+                method: "POST",
+                body: uploadData,
+            });
+            const data = await res.json();
+            setImageUrl(data.url);
             onSuccess("Ok");
             message.success('Image uploaded successfully');
         } catch (err) {
@@ -72,10 +73,12 @@ export default function AddProduct() {
         }
     };
 
-    const handleSubmit = async (values: any) => {
+    const handleSubmit = async () => {
         try {
-            // First validate all form fields
-            await form.validateFields();
+            const values: any = {
+                ...formData,
+            };
+            console.log('Form instance values:', values);
 
             // Check if we have all required fields
             if (!imageUrl) {
@@ -83,27 +86,23 @@ export default function AddProduct() {
                 return;
             }
 
-            // Get all form values
-            const formValues = await form.getFieldsValue();
-            console.log('Form values:', formValues); // Debug log
 
-            // Prepare the product data with explicit type checking
-            const productData = {
-                name: String(formValues.name),
-                description: String(formValues.description),
-                price: parseFloat(formValues.price),
-                quantity: parseInt(formValues.quantity),
-                imageUrl: imageUrl
-            };
-
-            // Validate that all required fields have values
-            if (!productData.name || !productData.description || 
-                isNaN(productData.price) || isNaN(productData.quantity)) {
+            if (!values.name || !values.description ||
+                values.price === undefined || values.quantity === undefined) {
                 message.error('Please fill in all required fields');
+                console.log('Please fill in all required fields');
                 return;
             }
 
-            console.log('Submitting product data:', productData); // Debug log
+            // Prepare the product data
+            const productData = {
+                name: String(values.name),
+                description: String(values.description),
+                price: parseFloat(values.price),
+                quantity: parseInt(values.quantity),
+                imageUrl: imageUrl
+            };
+
 
             const result = await addProduct({
                 variables: {
@@ -116,7 +115,6 @@ export default function AddProduct() {
                 },
             });
 
-            console.log('Server response:', result); // Debug log
 
             message.success('Product added successfully');
             setCurrentStep(3); // Move to success step
@@ -178,9 +176,9 @@ export default function AddProduct() {
                             label="Quantity in Stock"
                             rules={[{ required: true, message: 'Please enter quantity' }]}
                         >
-                            <InputNumber 
-                                min={0} 
-                                style={{ width: '100%' }} 
+                            <InputNumber
+                                min={0}
+                                style={{ width: '100%' }}
                                 placeholder="0"
                             />
                         </Form.Item>
@@ -205,14 +203,14 @@ export default function AddProduct() {
                     >
                         {imageUrl ? (
                             <div style={{ padding: '20px' }}>
-                                <img 
-                                    src={imageUrl} 
-                                    alt="product" 
-                                    style={{ 
-                                        maxWidth: '100%', 
+                                <img
+                                    src={imageUrl}
+                                    alt="product"
+                                    style={{
+                                        maxWidth: '100%',
                                         maxHeight: 200,
-                                        objectFit: 'contain' 
-                                    }} 
+                                        objectFit: 'contain'
+                                    }}
                                 />
                             </div>
                         ) : (
@@ -236,15 +234,21 @@ export default function AddProduct() {
     const next = async () => {
         try {
             // Validate only the fields in the current step
-            const currentFields = currentStep === 0 
+            const currentFields = currentStep === 0
                 ? ['name', 'description']
-                : currentStep === 1 
-                ? ['price', 'quantity']
-                : [];
+                : currentStep === 1
+                    ? ['price', 'quantity']
+                    : [];
 
             // Validate and store the values for the current step
             await form.validateFields(currentFields);
             const stepValues = form.getFieldsValue(currentFields);
+
+            setFormData(prev => ({
+                ...prev,
+                ...stepValues
+            }));
+
             console.log(`Step ${currentStep} values:`, stepValues); // Debug log
 
             setCurrentStep(currentStep + 1);
@@ -274,15 +278,15 @@ export default function AddProduct() {
                             status="success"
                             title="Product Added Successfully!"
                             extra={[
-                                <Button 
-                                    type="primary" 
-                                    key="products" 
-                                    onClick={() => router.push('/admin/allProducts')}
+                                <Button
+                                    type="primary"
+                                    key="products"
+                                    onClick={() => router.push('/admin/products')}
                                 >
                                     View All Products
                                 </Button>,
-                                <Button 
-                                    key="add" 
+                                <Button
+                                    key="add"
                                     onClick={() => {
                                         form.resetFields();
                                         setImageUrl('');
@@ -315,9 +319,11 @@ export default function AddProduct() {
                                     </Button>
                                 )}
                                 {currentStep === steps.length - 1 && (
-                                    <Button 
-                                        type="primary" 
-                                        onClick={() => form.submit()}
+                                    <Button
+                                        type="primary"
+                                        onClick={() => {
+                                            form.submit();
+                                        }}
                                         loading={loading}
                                     >
                                         Submit
