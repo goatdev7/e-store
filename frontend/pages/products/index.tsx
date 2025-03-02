@@ -21,6 +21,18 @@ interface ProductPageProps {
 export default function Products({ products }: ProductPageProps) {
   const [visibleCount, setVisibleCount] = useState(9);
 
+  const cloudinaryLoader = ({ src, width, quality = 100 }: { 
+    src: string;
+    width: number;
+    quality?: number;
+  }): string => {
+    src = src.replace('/upload/', `/upload/w_${width},q_${quality},f_auto/`);
+    return src
+
+  };
+  
+  
+
   const handleViewMore = () => {
     // Increase the visible count by 9 (or any other increment)
     setVisibleCount((prev) => prev + 9);
@@ -39,11 +51,11 @@ export default function Products({ products }: ProductPageProps) {
                 {product.imageUrl && (
 
                   <Image
+                    loader= {cloudinaryLoader}
                     src={product.imageUrl}
                     alt={product.name}
-                    className="w-full object-cover"
-                    width={50}
-                    height={50}
+                    width={200}
+                    height={200}
 
                   />
                 )}
@@ -67,7 +79,7 @@ export default function Products({ products }: ProductPageProps) {
             ))}
           </div>
         )}
-        {visibleCount < 25 && (
+        {visibleCount < products.length && (
           <div className="mt-8 text-center">
             <button
               onClick={handleViewMore}

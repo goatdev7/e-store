@@ -11,9 +11,11 @@ const Header: React.FC = () => {
     <header className="w-full bg-gradient-to-r from-purple-100 to-purple-300 transition-colors duration-500 shadow p-4 flex items-center justify-between ">
       <div className="flex items-center space-x-4 text-xl font-bold text-black ">
         <Link href="/" className='hover:no-underline'>E-Store</Link>
+        {role !== "admin" && (
         <Link href="/cart" className="text-gray-700 hover:text-indigo-600">
           <Image src="/cart.svg" height="20" width="20" alt="cartLogo" />
           </Link>
+        )}
       </div>
       <nav className="flex items-center space-x-4 ">
         <Link href="/" className="text-gray-700 hover:text-indigo-600 hover:no-underline">

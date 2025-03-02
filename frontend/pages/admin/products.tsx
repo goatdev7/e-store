@@ -115,7 +115,7 @@ const AllProducts = ({ products: initialProducts }: AllProductsProps) => {
           <Button
             type="primary"
             icon={<EditOutlined />}
-            onClick={() => router.push(`/admin/products/edit/${record.id}`)}
+            onClick={() => router.push(`/admin/edit/${record.id}`)}
           >
             Edit
           </Button>

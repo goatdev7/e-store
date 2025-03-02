@@ -7,13 +7,14 @@ import { useContext, useState } from "react";
 import { AuthContext } from "@/app/context/authContext";
 import PopupText from "@/app/components/popupText";
 import Router from "next/router";
-
+import Image from "next/image";
 interface Product {
     id: string;
     name: string;
     description: string;
     price: number;
     quantity: number;
+    imageUrl: string;
 }
 
 interface ProductDetailPageProps {
@@ -25,7 +26,7 @@ export default function ProductDetailPage({ product }: ProductDetailPageProps) {
     const [ PopupVisible, setPopupVisible ] = useState(false);
     const [popUpMessage, setPopupMsg ] = useState("Please login to add to cart");
     const { addToCart } = useCart();
-    const { token } = useContext(AuthContext);
+    const { role, token } = useContext(AuthContext);
 
     if (!product) {
         return (
@@ -49,20 +50,25 @@ export default function ProductDetailPage({ product }: ProductDetailPageProps) {
 
     return (
         <div className="min-h-screen bg-gray-50 py-10">
-            <div className="container mx-auto px-4">
+            <div className=" mx-auto px-4">
                 <Link href="/products" className="text-indigo-600 hover:underline mb-4 inline-block">
                     &larr; Back to Products
 
                 </Link>
                 <div className="bg-white rounded shadow p-6">
                     <h1 className="text-3xl text-gray-500 font-bold mb-4">{product.name}</h1>
+                    {product.imageUrl && (
+                        <Image src={product.imageUrl} alt={product.name} width={200} height={200} priority />    
+                    )}
                     <p className="text-gray-500 mb-4">{product.description}</p>
                     <p className="text-xl font-semibold text-indigo-700">
                         ${product.price.toFixed(2)}
                     </p>
-                    <button onClick={handleAddToCart} className="mt-6 bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700">
-                        Add to Cart
-                    </button>
+                    {role !== "admin" && (   
+                        <button onClick={handleAddToCart} className="mt-6 bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700">
+                            Add to Cart
+                        </button>
+                    )}
                 </div>
             </div>
             <PopupText
