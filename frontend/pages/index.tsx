@@ -34,7 +34,7 @@ export default function Home({ products }: HomeProps) {
 
     return (
         <div className="min-h-screen bg-standard">
-                <h1 className="text-3xl flex justify-center mb-4">Welcome to an AI-Powered E-Store</h1>
+                <h1 className="text-3xl flex justify-center mb-4 font-lato">Welcome to an AI-Powered E-Store</h1>
                 <p className="text-lg mb-6 text-center">
                     Your one-stop shop for the latest and greatest in electronics powered by AI.
                 </p>
@@ -66,6 +66,7 @@ export default function Home({ products }: HomeProps) {
                                             transition={{ duration: 0.5, delay: 0.2 }}
                                             className="rounded-lg shadow-md py-8 p-6 hover:shadow-xl transition-shadow duration-300"
                                         >
+                                            <Link href={`/products/${product.id}`} className="hover:no-underline cursor:pointer" >
                                             <Typography variant="h6" className="text-xl font-semibold mb-2">
                                                 <p>{product.name}</p>
                                             </Typography>
@@ -75,6 +76,7 @@ export default function Home({ products }: HomeProps) {
                                             <Typography variant="h5" className="font-bold text-indigo-600">
                                                 ${product.price.toFixed(2)}
                                             </Typography>
+                                            </Link>
                                         </motion.div>
                                     </Grid>
                                 ))}

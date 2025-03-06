@@ -56,14 +56,14 @@ export default function LoginPage() {
 
     return (
         <>
-            { visible && <LoadingSpinner />}
             <LoginForm
                 formData={formData}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 loading={loading}
                 error={error}
-            />
+                />
+                { visible && <LoadingSpinner />}
         </>
     );
 };

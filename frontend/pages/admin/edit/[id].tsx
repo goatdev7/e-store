@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import AdminLayout from '@/app/components/AdminLayout';
 import { useQuery, useMutation } from '@apollo/client';
+
 import { GET_PRODUCT, UPDATE_PRODUCT } from '@/app/services/product';
 
 interface Product {
@@ -15,6 +16,8 @@ interface Product {
 export default function EditProduct() {
     const router = useRouter();
     const { id } = router.query;
+    const [imageUrl, setImageUrl] = useState<string>('');
+    const [uploading, setUploading] = useState(false);
 
     const [product, setProduct] = useState<Product>({
         name: '',
@@ -32,6 +35,7 @@ export default function EditProduct() {
         }
     });
 
+
     const [updateProduct] = useMutation(UPDATE_PRODUCT);
 
     if (loading) {
@@ -40,25 +44,37 @@ export default function EditProduct() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
+        
         // Validate required fields
-        const requiredFields = ['name', 'description', 'price', 'quantity'] as const;
+        const requiredFields = ['name', 'description', 'price', 'quantity', 'imageUrl'] as const;
         const emptyFields = requiredFields.filter(field => !product[field]);
+        
+        // Create an object with only the allowed fields for ProductInput
+        const updatedFields = {
+            name: String(product.name),
+            description: String(product.description),
+            price: parseFloat(String(product.price)),
+            quantity: parseInt(String(product.quantity)),
+            imageUrl: String(product.imageUrl)
+        };
 
         if (emptyFields.length > 0) {
             const proceed = window.confirm(
-                `The following fields are empty: ${emptyFields.join(', ')}. Do you want to proceed with the update?`
+                `The following fields are empty: ${emptyFields.join(', ')}. Do you want to proceed?`
             );
             if (!proceed) {
                 router.push('/admin/products');
                 return;
-            }
+            } 
         }
-
 
         try {
             const response = await updateProduct({
-                variables: { id, product },
+            
+                variables: { 
+                    id,
+                    product: updatedFields // Now only includes the fields defined in ProductInput
+                },
             });
 
             if (!response.data) {
@@ -69,8 +85,8 @@ export default function EditProduct() {
         } catch (error) {
             console.error('Error updating product:', error);
             window.alert('Failed to update product. Please try again.');
+            return;
         }
-
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -79,6 +95,38 @@ export default function EditProduct() {
             ...prev,
             [name]: value
         }));
+    };
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        try {
+            setUploading(true);
+            const formData = new FormData();
+            formData.append('file', file);
+
+            const response = await fetch('/api/upload', {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!response.ok) {
+                throw new Error('Upload failed');
+            }
+
+            const data = await response.json();
+            setImageUrl(data.url);
+            setProduct(prev => ({
+                ...prev,
+                imageUrl: data.url
+            }));
+        } catch (error) {
+            console.error('Error uploading image:', error);
+            alert('Failed to upload image');
+        } finally {
+            setUploading(false);
+        }
     };
 
     return (
@@ -135,14 +183,19 @@ export default function EditProduct() {
                     </div>
 
                     <div>
-                        <label className="block mb-2">Image URL</label>
+                        <label className="block mb-2">Image</label>
                         <input
-                            type="text"
-                            name="imageUrl"
-                            value={product.imageUrl}
-                            onChange={handleChange}
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
                             className="w-full p-2 border rounded"
                         />
+                        {uploading && <p className="text-sm text-gray-500">Uploading...</p>}
+                        {imageUrl && (
+                            <div className="mt-2">
+                                <img src={imageUrl} alt="Preview" className="w-40 h-40 object-cover" />
+                            </div>
+                        )}
                     </div>
 
                     <button

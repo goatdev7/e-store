@@ -1,7 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
 /* Global Styling */
 body {
   @apply bg-gray-50 text-gray-800;
@@ -19,7 +21,7 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Buttons */
 .btn-primary {
-  @apply bg-gradient-to-r from-purple-500 to-purple-700 text-white font-semibold py-2 px-6 rounded-full text-xl transition-colors duration-300 hover:from-purple-600 hover:to-purple-800 hover:no-underline;
+  @apply bg-gradient-to-r from-purple-500 to-purple-600 text-white font-semibold py-2 px-6 rounded-full text-xl transition-colors duration-300 hover:from-purple-600 hover:to-purple-800 hover:no-underline;
 }
 .bg-standard {
   @apply bg-gradient-to-r from-purple-100 to-purple-300 transition-colors duration-500
@@ -37,6 +39,6 @@ a {
 
 @layer base {
   body {
-    @apply font-poppins;
+    @apply font-inter;
   }
 }

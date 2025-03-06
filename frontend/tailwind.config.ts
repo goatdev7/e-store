@@ -21,7 +21,8 @@ export default {
       
       
       fontFamily: {
-        poppins: ['Poppins', 'sans-serif'],
+        // lato: ['Lato', 'sans-serif'],
+        inter: ['Inter', 'sans-serif'],
       },
     },
   },
