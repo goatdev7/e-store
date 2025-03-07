@@ -5,6 +5,8 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { Typography } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import TypewriterAnimation from "../src/app/components/typeWriterAnimation";
+import TestimonialSlider from "../src/app/components/testimonials";
 
 
 const GET_PRODUCTS = gql`
@@ -34,9 +36,9 @@ export default function Home({ products }: HomeProps) {
 
     return (
         <div className="min-h-screen bg-standard">
-                <h1 className="text-3xl flex justify-center mb-4 font-lato">Welcome to an AI-Powered E-Store</h1>
-                <p className="text-lg mb-6 text-center">
-                    Your one-stop shop for the latest and greatest in electronics powered by AI.
+                <h1 className="text-3xl py-10 flex justify-center mb-4 font-lato">AI-Powered E-Store: Discover Smart Shopping <TypewriterAnimation words = {[" with Us", " with AI" ]} /> </h1>
+                <p className="text-lg text-gray-600 mb-6 text-center">
+                Make confident electronic product decisions with our intelligent AI assistant. Compare, analyze, and get personalized recommendations before you buy.
                 </p>
 
                 {/* Top Featured Products Section */}
@@ -85,7 +87,7 @@ export default function Home({ products }: HomeProps) {
 
                     </div>
                 </motion.section>
-                <div className="mb-6 text-3xl font-bold text-center">
+                <div className="mb-6 py-4 font-lato text-2xl font-bold text-center">
                     <Link
                         href="/products"
                         className="btn-primary"
@@ -95,51 +97,8 @@ export default function Home({ products }: HomeProps) {
                 </div>
 
                 {/* Testimonials Section */}
-                <motion.section
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1 }}
-                    className=" flex items-center justify-center"
-                >
-                    <div className="container mx-auto py-10 px-4">
-                        <h2 className="text-3xl font-bold mb-12 text-center ">What Our Customers Say</h2>
-                        <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 0.1 }}
-                                className="bg-white shadow-lg rounded-lg p-8 transform hover:-translate-y-1 transition-transform duration-300"
-                            >
-                                <p className="text-gray-700 italic text-lg">
-                                    &quot;E-Store has the best selection of gadgets. The customer service is amazing!&quot;
-                                </p>
-                                <h3 className="mt-6  font-bold">- John D.</h3>
-                            </motion.div>
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 0.2 }}
-                                className="bg-white shadow-lg rounded-lg p-8 transform hover:-translate-y-1 transition-transform duration-300"
-                            >
-                                <p className="text-gray-700 italic text-lg">
-                                    &quot;I love my new 4K TV. The shopping experience was smooth and hassle-free.&quot;
-                                </p>
-                                <h3 className="mt-6  font-bold">- Sarah K.</h3>
-                            </motion.div>
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.5, delay: 0.3 }}
-                                className="bg-white shadow-lg rounded-lg p-8 transform hover:-translate-y-1 transition-transform duration-300"
-                            >
-                                <p className="text-gray-700 italic text-lg">
-                                    &quot;Fast delivery, great prices, and top-notch products. Highly recommend!&quot;
-                                </p>
-                                <h3 className="mt-6  font-bold">- Mike P.</h3>
-                            </motion.div>
-                        </div>
-                    </div>
-                </motion.section>
+                <TestimonialSlider />
+
         </div>
     );
 }
