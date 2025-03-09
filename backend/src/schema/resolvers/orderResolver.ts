@@ -1,7 +1,7 @@
 import { Order } from "../../models/Order";
 
 
-const orderResolver = {
+export const orderResolver = {
     Mutation: {
         createOrder: async (_: any, { order }: any,
             { user }: { user?: { id: string } }
