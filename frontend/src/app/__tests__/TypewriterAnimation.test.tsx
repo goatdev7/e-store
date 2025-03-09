@@ -3,17 +3,16 @@ import { render, screen } from '@testing-library/react';
 import TypewriterAnimation from '../components/typeWriterAnimation';
 import '@testing-library/jest-dom';
 
-// Mock the useTypewriter hook
+// Mock react-simple-typewriter so we control its output
 jest.mock('react-simple-typewriter', () => ({
   useTypewriter: () => ['Mocked text'],
-  Cursor: () => <p>|</p>,
+  Cursor: () => <span>_</span>,
 }));
 
 describe('TypewriterAnimation', () => {
-  test('renders the typewriter text and cursor', () => {
+  it('renders the typewriter text and cursor', () => {
     render(<TypewriterAnimation words="Hello, World!" />);
     expect(screen.getByText(/Mocked text/i)).toBeInTheDocument();
-    
-    expect(screen.getByText('|')).toBeInTheDocument();
+    expect(screen.getByText('_')).toBeInTheDocument();
   });
 });

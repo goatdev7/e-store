@@ -24,7 +24,7 @@ const TypewriterAnimation: React.FC<TypewriterAnimationProps> = ({
   });
 
   return (
-    <span className='px-2 text-center font-semibold'>
+    <span className='px-2 text-center font-semibold text-purple-500'>
       {text}
       <Cursor cursorColor="#000"  cursorStyle='_' />
     </span>

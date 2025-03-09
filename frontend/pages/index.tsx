@@ -36,7 +36,7 @@ export default function Home({ products }: HomeProps) {
 
     return (
         <div className="min-h-screen bg-standard">
-                <h1 className="text-3xl py-10 flex justify-center mb-4 font-lato">AI-Powered E-Store: Discover Smart Shopping <TypewriterAnimation words = {[" with Us", " with AI" ]} /> </h1>
+                <h1 className="text-3xl py-10 flex justify-center mb-4 font-lato">AI-Powered E-Store: Discover Smart Shopping <TypewriterAnimation words = {[" with Us", " with AI" ]}/> </h1>
                 <p className="text-lg text-gray-600 mb-6 text-center">
                 Make confident electronic product decisions with our intelligent AI assistant. Compare, analyze, and get personalized recommendations before you buy.
                 </p>

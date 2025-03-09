@@ -28,7 +28,7 @@ const TestimonialSlider: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full overflow-hidden">
+    <div className="mx-4 overflow-hidden">
             <h2 className="text-3xl font-bold mb-12 text-center">What Our Customers Say</h2>
       <motion.div
         ref={sliderRef}
