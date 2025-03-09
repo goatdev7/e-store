@@ -4,7 +4,8 @@ E-Store is a full-stack application designed for learning and experimenting with
 
 A little sneak-peek of the in-process homepage(something amazing is cooking):
 
-![Home Page img](frontend/public/sneak-peek.png)
+![Home Page Image](https://github.com/user-attachments/assets/6d955fda-8247-4803-8547-5ad7a904f8c4)
+
 
 ## Tech Stack
 
