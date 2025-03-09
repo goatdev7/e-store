@@ -19,8 +19,8 @@ const TypewriterAnimation: React.FC<TypewriterAnimationProps> = ({
     words: wordsArray,
     loop,
     delaySpeed,
-    typeSpeed:70,
-    deleteSpeed:50,
+    typeSpeed:150,
+    deleteSpeed:70,
   });
 
   return (

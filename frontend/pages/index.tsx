@@ -36,10 +36,11 @@ export default function Home({ products }: HomeProps) {
 
     return (
         <div className="min-h-screen bg-standard">
-                <h1 className="text-3xl py-10 flex justify-center mb-4 font-lato">AI-Powered E-Store: Discover Smart Shopping <TypewriterAnimation words = {[" with Us", " with AI" ]}/> </h1>
+                <h1 className="text-3xl py-5 flex justify-center font-lato">AI-Powered E-Store </h1>
                 <p className="text-lg text-gray-600 mb-6 text-center">
-                Make confident electronic product decisions with our intelligent AI assistant. Compare, analyze, and get personalized recommendations before you buy.
+                Make confident electronic product decisions with our intelligent AI assistant.
                 </p>
+
 
                 {/* Top Featured Products Section */}
                 <motion.section
@@ -50,7 +51,7 @@ export default function Home({ products }: HomeProps) {
                     className="flex items-center items-center justify-center py-10"
                 >
                     <div className="container px-4 mb-6">
-                        <h2 className="text-3xl font-bold mb-6 text-center">Top Featured Products</h2>
+                        <h2 className="text-3xl mb-4 flex justify-center font-lato">Discover Smart Shopping with <TypewriterAnimation words = {[" Us", " AI" ]}/> </h2>
                         {featuredProducts.length === 0 ? (
                             <p className="text-gray-700 text-center">No products available right now.</p>
                         ) : (

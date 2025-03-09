@@ -38,6 +38,32 @@ export const typeDefs = gql`
     items: [CartItem]
     }
 
+    type OrderItem {
+    product: Product!
+    quantity: Int!
+    price: Float!
+    }
+
+    type Order{
+    id: ID!
+    user: User!
+    items: [OrderItem]!
+    total: Float!
+    status: String!
+    createdAt: String!
+    }
+
+    input OrderItemInput{
+    productId: ID!
+    quantity: Int!
+    price: Float!
+    }
+
+    input OrderInput{
+    items: [OrderItemInput]!
+    total: Float!
+    }
+
     input loginInput{
     identifier: String!
     password: String!
@@ -76,5 +102,6 @@ export const typeDefs = gql`
     updateCartItem(productId: ID!, quantity: Int!): Cart
     addToCart(productId: ID!, quantity: Int!): Cart
     removeFromCart(productId: ID!): Cart
+    createOrder(order: OrderInput!): Order!
     }
 `;
