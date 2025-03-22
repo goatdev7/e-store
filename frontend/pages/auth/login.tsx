@@ -20,50 +20,46 @@ const LOGIN_MUTATION = gql`
     }
 `;
 
-// login page function
 export default function LoginPage() {
     const [visible, setSpinnerVisible] = useState(false);
     const { setToken, setRole } = useContext(AuthContext);
     const [formData, setFormData] = useState({ identifier: '', password: '' });
     const [login, { loading, error }] = useMutation(LOGIN_MUTATION);
-
-    // fucntion to handle change in formdata
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
     const router = useRouter();
 
-    // handle submit form function
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        const { data } = await login({ variables: { input: formData } });
-        if (data?.loginUser?.token) {
-            const token = data.loginUser.token;
-            const role = data.loginUser.user.role;
-            
-            setToken(token);
-            setRole(role);
-            
+    // handle change in form data remains unchanged
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
+    };
+
+    // updated handleSubmit receives form values from Ant Design Form
+    const handleSubmit = async (values: { identifier: string; password: string }) => {
+        values.identifier = values.identifier.trim();
+        try {
+            const { data } = await login({ variables: { input: values } });
+            setToken(data.loginUser.token);
+            setRole(data.loginUser.user.role);
             setSpinnerVisible(true);
             setTimeout(() => {
-                setSpinnerVisible(true);
                 router.push("/");
             }, 2000);
-            //redirect to home page 
+
+        } catch (err) {
+            console.error(err);
         }
 
     };
 
     return (
         <>
+            {visible && <LoadingSpinner />}
             <LoginForm
                 formData={formData}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 loading={loading}
                 error={error}
-                />
-                { visible && <LoadingSpinner />}
+            />
         </>
     );
-};
+}
