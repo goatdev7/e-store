@@ -29,7 +29,7 @@ export default function LoginPage() {
 
     // handle change in form data remains unchanged
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value.trim() });
+        setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
     // updated handleSubmit receives form values from Ant Design Form

@@ -36,6 +36,7 @@ export default function RegisterPage() {
     const [PopUpVisible, setPopUpVisible] = useState(false);
 
     const [register, { loading, error }] = useMutation(REGISTER_MUTATION);
+
     // function to handle change in the form
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -43,13 +44,13 @@ export default function RegisterPage() {
 
     // function to handle submit the form
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        const { data } = await register({ variables: { input: formData } });
-        console.log(formData);
-
-        if (data?.registerUser?.token) {
+    const handleSubmit = async (values: { firstName: string; lastName: string; username: string; email: string; password: string; role: string }) => {
+        values.username = values.username.trim();
+        values.email = values.email.trim();
+        values.firstName = values.firstName.trim();
+        values.lastName = values.lastName.trim();
+        try{
+            const { data } = await register({ variables: { input: formData } });
             setToken(data.registerUser.token);
             setPopUpVisible(true);
             // rediret to the login page probably
@@ -59,6 +60,9 @@ export default function RegisterPage() {
                 setPopUpVisible(false)
                 router.push('/');
             }, 4000);
+
+        }catch(err){
+            console.error(err);
         }
     };
 

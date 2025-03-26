@@ -1,130 +1,123 @@
 import { ApolloError } from "@apollo/client";
 import React from "react";
+import Form from 'antd/lib/form';
+import Input from 'antd/lib/input';
+import Button from 'antd/lib/button';
+import Alert from 'antd/lib/alert';
+import Card from 'antd/lib/card';
+import Layout from 'antd/lib/layout';
+import UserOutlined from '@ant-design/icons/UserOutlined';
+import LockOutlined from '@ant-design/icons/LockOutlined';
+import MailOutlined from '@ant-design/icons/MailOutlined';
+import Link from 'next/link';
+
+const { Content } = Layout;
 
 interface RegisterFormProps {
-    formData: { 
-        firstName: string; 
-        lastName: string; 
-        email: string; 
-        username: string; 
-        password: string; 
-        role: string; 
+    formData: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        username: string;
+        password: string;
+        role: string;
     };
     handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    handleSubmit: (e: React.FormEvent) => Promise<void>;
+    handleSubmit: (values: any) => Promise<void>;
     loading: boolean;
     error: ApolloError | undefined;
 }
 
-const RegisterForm: React.FC<RegisterFormProps> = ({ formData, handleChange, handleSubmit, loading, error }) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({
+    formData,
+    handleChange,
+    handleSubmit,
+    loading,
+    error
+}) => {
+
+    const onFinish = (values: any) => {
+        handleSubmit(values);
+    };
+
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-200">
-            <form 
-                onSubmit={handleSubmit}
-                className="bg-white p-8 rounded shadow-md w-full max-w-sm"
+        <Layout style={{ minHeight: '100vh' }}>
+            <Content className='flex justify-center items-center bg-gradient-to-r from-purple-100 to-purple-300 transition-colors duration-500'
             >
-                <h2 className="text-2xl text-gray-500 font-bold mb-6 text-center">Create an Account</h2>
+                <Card className='border shadow-md w-100'>
+                    <h1 className='text-center mb-8'>Join Us</h1>
+                    <Form name='register' initialValues={formData} onFinish={handleSubmit} layout='vertical'>
+                        <div className='flex justify-between space-x-4'>
+                            <Form.Item name='firstName' label='First Name'
+                                rules={[
+                                    {
+                                        required: true,
+                                        message: 'Please enter your first name!'
+                                    }
+                                ]}>
+                                <Input
+                                    name='firstName'
+                                    onChange={handleChange}
+                                    placeholder='First Name'
+                                    prefix={<UserOutlined />}
+                                />
+                            </Form.Item>
+                            <Form.Item name='lastName' label='Last Name'
+                                rules={[{ required: true, message:'Please enter your last name' }]}>
+                                <Input
+                                    name='lastName'
+                                    onChange={handleChange}
+                                    placeholder='Last Name'
+                                    prefix={<UserOutlined />}
+                                />
+                            </Form.Item>
+                        </div>
+                        <div className='flex justify-between space-x-4'>
+                            <Form.Item name='username' label='Username'
+                                rules={[{ required: true, message: 'Please enter the username' }]}>
+                                <Input
+                                    name='username'
+                                    onChange={handleChange}
+                                    placeholder='Username'
+                                    prefix={<UserOutlined />}
+                                />
+                            </Form.Item>
+                            <Form.Item name='email' label='Email Address'
+                                rules={[{ required: true, message: 'Please enter your email address' }]}>
+                                <Input
+                                    name='email'
+                                    placeholder='Email Address'
+                                    prefix={<MailOutlined />}
+                                    onChange={handleChange}
+                                />
+                            </Form.Item>
+                        </div>
+                        <Form.Item name='password' label='Password'
+                            rules={[{ required: true, message: 'Please enter your password' }]}>
+                            <Input.Password
+                                name='password'
+                                placeholder='Password'
+                                prefix={<LockOutlined />}
+                                onChange={handleChange}
+                            />
+                        </Form.Item>
+                        <Input type='hidden' name='role' value='user' />
+                        <Form.Item>
+                            <Button type='primary' htmlType='submit' block loading={loading}>
+                                {loading ? 'Registering...' : 'Register'}
+                            </Button>
+                        </Form.Item>
+                        {error && <Alert message={error.message} type='error' showIcon />}
+                        <p style={{ textAlign: 'center' }}>
+                            Already a member? <Link href='/auth/login'>Login Now</Link>
+                        </p>
+                    </Form>
 
-                <div className="mb-4">
-                    <label htmlFor="firstName" className="block text-gray-700 font-medium mb-2">
-                        First Name
-                    </label>
-                    <input
-                        type="text"
-                        required
-                        value={formData.firstName}
-                        placeholder="Enter Your First Name"
-                        onChange={handleChange}
-                        name="firstName"
-                        id="firstName"
-                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none focus:ring-2 text-black focus:ring-indigo-500"
-                    />
-                </div>
+                </Card>
 
-                <div className="mb-4">
-                    <label htmlFor="lastName" className="block text-gray-700 font-medium mb-2">
-                        Last Name
-                    </label>
-                    <input
-                        type="text"
-                        required
-                        value={formData.lastName}
-                        placeholder="Enter Your Last Name"
-                        onChange={handleChange}
-                        name="lastName"
-                        id="lastName"
-                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none text-black focus:ring-2 focus:ring-indigo-500"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="username" className="block text-gray-700 font-medium mb-2">
-                        Username
-                    </label>
-                    <input
-                        type="text"
-                        required
-                        value={formData.username}
-                        placeholder="Create a Username"
-                        onChange={handleChange}
-                        name="username"
-                        id="username"
-                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none text-black focus:ring-2 focus:ring-indigo-500"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="email" className="block text-gray-700 font-medium mb-2">
-                        Email Address
-                    </label>
-                    <input
-                        type="email"
-                        required
-                        value={formData.email}
-                        placeholder="Enter your Email Address"
-                        onChange={handleChange}
-                        name="email"
-                        id="email"
-                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none text-black focus:ring-2 focus:ring-indigo-500"
-                    />
-                </div>
-
-                <div className="mb-4">
-                    <label htmlFor="password" className="block text-gray-700 font-medium mb-2">
-                        Password
-                    </label>
-                    <input
-                        type="password"
-                        required
-                        value={formData.password}
-                        placeholder="Create a Strong Password"
-                        onChange={handleChange}
-                        name="password"
-                        id="password"
-                        className="w-full px-3 py-2 border rounded border-gray-300 focus:outline-none text-black focus:ring-2 focus:ring-indigo-500"
-                    />
-                </div>
-
-                {/* If you're using the 'role' field, you can expose it as a hidden or selectable input.
-                    For now, let's make it a simple hidden input or a normal text input if required. */}
-                <input
-                    type="hidden"
-                    name="role"
-                    value="user"
-                />
-
-                <button 
-                    disabled={loading} 
-                    type="submit" 
-                    className={`w-full py-2 text-white font-semibold rounded ${loading ? 'bg-indigo-300 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'}`}
-                >
-                    {loading ? 'Registering...' : 'Register'}
-                </button>
-
-                {error && <p className="text-red-600 text-center mt-4">Error: {error.message}</p>}
-            </form>
-        </div>
+            </Content>
+        </Layout>
     );
-};
+}
 
 export default RegisterForm;
